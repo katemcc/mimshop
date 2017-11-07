@@ -57,18 +57,8 @@
 
       <header class="site-header" role="banner">
         <div class="wrapper">
-          <div class="grid--full grid--table">
-            <div class="grid__item large--hide large--one-sixth one-quarter">
-              <div class="site-nav--open site-nav--mobile">
-                <button type="button" class="icon-fallback-text site-nav__link site-nav__link--burger js-drawer-open-button-left" aria-controls="NavDrawer">
-                  <span class="burger-icon burger-icon--top"></span>
-                  <span class="burger-icon burger-icon--mid"></span>
-                  <span class="burger-icon burger-icon--bottom"></span>
-                  <span class="fallback-text">{{ 'general.drawers.navigation' | t }}</span>
-                </button>
-              </div>
-            </div>
-            <div class="grid__item large--one-third medium-down--one-half">
+          <div class="grid--full">
+            <div class="grid__item large--one-quarter medium-down--one-whole">
               {% comment %}
                 Use the uploaded logo from theme settings if enabled.
                 Site name gets precedence with H1 tag on homepage, div on other pages.
@@ -107,7 +97,7 @@
                 </div>
               {% endif %}
             </div>
-            <div class="grid__item large--two-thirds large--text-right medium-down--hide">
+            <div class="grid__item large--one-half large--text-center medium-down--one-whole">
               {% comment %}
                 List out your main-menu linklist (default)
 
@@ -122,6 +112,12 @@
                 </li>
                 {% endif %}
 
+                <li class="site-nav__item site-nav--compress__menu">
+                  <button type="button" class="icon-fallback-text site-nav__link site-nav__link--icon js-drawer-open-left" aria-controls="NavDrawer">
+                    <span class="icon icon-hamburger" aria-hidden="true"></span>
+                    <span class="fallback-text">{{ 'general.drawers.navigation' | t }}</span>
+                  </button>
+                </li>
                 {% for link in linklists[section.settings.main_menu_link_list].links %}
                   {% comment %}
                     Create a dropdown menu by naming a linklist the same as a link in the parent nav
@@ -168,28 +164,15 @@
                   </li>
                 {% endif %}
 
-                {% if section.settings.search == 'page' or section.settings.search == 'modal' %}
-                  {% assign search_modal = true %}
-                  {% if section.settings.search == 'page' %}
-                    {% assign search_modal = false %}
-                  {% endif %}
-                  <li class="site-nav__item">
-                    <a href="/search" class="site-nav__link site-nav__link--icon{% if search_modal %} js-toggle-search-modal{% endif %}" data-mfp-src="#SearchModal">
-                      <span class="icon-fallback-text">
-                        <span class="icon icon-search" aria-hidden="true"></span>
-                        <span class="fallback-text">{{ 'general.search.title' | t }}</span>
-                      </span>
-                    </a>
-                  </li>
-                {% endif %}
+               
 
                 <li class="site-nav__item">
-                  <a href="/cart" class="site-nav__link site-nav__link--icon cart-link js-drawer-open-button-right" aria-controls="CartDrawer">
-                    <span class="icon-fallback-text">
-                      <span class="icon icon-cart" aria-hidden="true"></span>
-                      <span class="fallback-text">{{ 'layout.cart.title' | t }}</span>
-                    </span>
-                    <span class="cart-link__bubble{% if cart.item_count > 0 %} cart-link__bubble--visible{% endif %}"></span>
+                  <a href="/cart" class="site-nav__link  cart-link js-drawer-open-right" aria-controls="CartDrawer">
+                  Cart
+                    
+    
+      <sup>{{ cart.item_count }} </sup>
+   
                   </a>
                 </li>
 
@@ -198,7 +181,7 @@
             </div>
             <div class="grid__item large--hide one-quarter">
               <div class="site-nav--mobile text-right">
-                <a href="/cart" class="site-nav__link cart-link js-drawer-open-button-right" aria-controls="CartDrawer">
+                <a href="/cart" class="site-nav__link cart-link js-drawer-open-right" aria-controls="CartDrawer">
                   <span class="icon-fallback-text">
                     <span class="icon icon-cart" aria-hidden="true"></span>
                     <span class="fallback-text">{{ 'layout.cart.title' | t }}</span>
