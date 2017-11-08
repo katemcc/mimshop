@@ -74,13 +74,8 @@
                   {% assign image_size = "180x" %}
                 {% endif %}
 
-                {% if section.settings.logo-inverted and template.name == 'index' %}
-                  <a href="/" itemprop="url" class="site-header__logo-link">
-                    <img src="{{ section.settings.logo-inverted | img_url: image_size }}"
-                    srcset="{{ section.settings.logo-inverted | img_url: image_size }} 1x, {{ section.settings.logo-inverted | img_url: image_size, scale: 2 }} 2x"
-                    alt="{{ section.settings.logo-inverted.alt | default: shop.name }}"
-                    itemprop="logo">
-                  </a>
+                {% if template.name == 'index' %}
+                 <h2>Made in Mongolia Handmade Felt Slippers</h2>
                 {% elsif section.settings.logo %}
                   <a href="/" itemprop="url" class="site-header__logo-link">
                      <img src="{{ section.settings.logo | img_url: image_size }}"
