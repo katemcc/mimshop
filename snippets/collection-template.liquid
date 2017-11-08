@@ -16,9 +16,9 @@
       </div>
     </div>
   {% endif %}
-<ul>
+<ul class="collection-menu">
 {% for link in linklists.collections-menu.links %}
-   <li>{{ link.title | link_to: link.url }}</li>
+   <li class="collection-menu-link">{{ link.title | link_to: link.url }}</li>
 {% endfor %}
 </ul>
     <div class="grid--full collection-sorting{% if section.settings.collection_sort_enable %} collection-sorting--enabled{% endif %}">
