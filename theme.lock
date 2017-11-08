@@ -32,7 +32,7 @@ assets/respond-proxy.html:
 assets/respond.min.js:
   development: 2017-11-07T05:07:26-05:00   a2684e9b8fa50d6d11c56a9ada068528
 assets/theme.css.liquid:
-  development: 2017-11-08T06:34:49-05:00   8c74add246fd2f4e48aed5fdfe6db47e
+  development: 2017-11-08T12:03:52-05:00   d365bc9bfe061a481a3532b6b42f15a2
 assets/theme.js.liquid:
   development: 2017-11-07T05:07:26-05:00   99d72191ecf444663188df137f84d4b1
 assets/theme.scss.liquid:
@@ -90,7 +90,7 @@ sections/featured-video.liquid:
 sections/footer.liquid:
   development: 2017-11-07T05:07:24-05:00   09c4cbb15a45a2bb33e70183149c4b60
 sections/header.liquid:
-  development: 2017-11-07T16:35:39-05:00   c67d0428b0df705b427f43d08927a17b
+  development: 2017-11-08T12:23:50-05:00   1d246d416e960fe390118d3d38d5631e
 sections/list-collections-template.liquid:
   development: 2017-11-07T05:07:24-05:00   cc519f30f6bced273d6c82201bb79c40
 sections/map.liquid:
@@ -116,7 +116,7 @@ snippets/collection-grid-item.liquid:
 snippets/collection-sorting.liquid:
   development: 2017-11-07T05:07:26-05:00   b97c850ae616c798f7fcf832a0117681
 snippets/collection-template.liquid:
-  development: 2017-11-08T06:39:22-05:00   61c714454d1b84423fdd5fc6cfa33582
+  development: 2017-11-08T07:05:31-05:00   1c7065256c0442939fceb7a3bbb3eb47
 snippets/comment.liquid:
   development: 2017-11-07T05:07:27-05:00   490bf7370ece4d0217f9c229aefd5880
 snippets/featured-blog.liquid:
@@ -138,7 +138,7 @@ snippets/pagination.liquid:
 snippets/product-grid-collage.liquid:
   development: 2017-11-07T05:07:27-05:00   4abdc9f608a23b5c0ab9d2581e08a060
 snippets/product-grid-item.liquid:
-  development: 2017-11-07T05:07:27-05:00   967ef748cf9d1dc180bca9987fa017cb
+  development: 2017-11-08T12:01:17-05:00   83e88aa709d9d630a1f4b875f485f588
 snippets/respond.liquid:
   development: 2017-11-07T05:07:27-05:00   ca6abf0635dc2ad8c6bd377f83c79f6b
 snippets/search-bar.liquid:
