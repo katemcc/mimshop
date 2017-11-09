@@ -618,6 +618,11 @@
         "id": "type_base_family",
         "label": "Font",
         "options": [
+         {
+            "value": "'PT Mono', monospace",
+            "label": "PT Mono",
+            "group": "My added fonts"
+          },
           {
             "value": "'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, 'AppleGothic', sans-serif",
             "label": "Avant Garde",

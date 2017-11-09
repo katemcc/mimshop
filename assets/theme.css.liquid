@@ -2,11 +2,14 @@
 #PageContainer {
     background-color: #E4E0DF;
 }
-.template-collection .header-wrapper, .template-cart .header-wrapper{
+#shopify-section-header {
+    margin-bottom: 20px;
+}
+.template-collection .header-wrapper, .template-cart .header-wrapper, .template-page .header-wrapper, .template-blog .header-wrapper {
     color: #E4E0DF;
   background-color: #12130f;
 }
-.template-collection a.site-nav__link, .template-cart a.site-nav__link {
+.template-collection a.site-nav__link, .template-cart a.site-nav__link, .template-page a.site-nav__link, .template-blog a.site-nav__link {
     color: #E4E0DF;
 }
 .main-content { padding-top: 0px; padding-bottom: 0; line-height: 1; background-color: ##E4E0DF;}
@@ -77,7 +80,7 @@ sup {
     margin-left: -.8em;
 }
 .site-header {
-    padding: 20px 0 20px;
+    padding: 20px 0 15px;
 }
 .site-nav__link {
     font-family: "PT Mono", monospace;
@@ -91,12 +94,6 @@ sup {
     -o-transition: color 0.2s;
     transition: color 0.2s;
     font-size: 1em;
-}
-.site-nav--compress__menu {
-    display:none;
-}
-.site-header__logo img {
-    margin: 0 0 0 60px;
 }
 .site-header h2 {
     display: none;
@@ -147,9 +144,6 @@ footer {
 .collection-collage__item-wrapper {
     overflow: visible;
 }
-#collection-menu {
-
-}
 .collection-menu-link {
     font-family: "PT Mono", monospace;
     font-weight: 400;
@@ -174,3 +168,30 @@ grid-product__image-wrapper {
     background-color: #12130F;
     color: #E4E0DF;
 }
+.btn .btn-full-width {
+    width: 100%;
+}
+site-header__logo img {
+    margin: 0 auto;
+}
+.burger-icon {
+    display: block;
+    height: 4px;
+    width: 28px;
+    left: 25px;
+    margin-left: -9px;
+    position: absolute;
+    transition: all 0.25s ease-out;
+    background: #E4E0DF;
+}
+.burger-icon--bottom {
+    top: 41px;
+}
+.burger-icon--mid {
+    top: 34px;
+}
+.burger-icon--top {
+    top: 27px;
+}
+
+

@@ -3043,7 +3043,7 @@ theme.fitNav = function() {
 
   function controlNav() {
     // Subtract 20 from width to account for inline-block spacing
-    var navWidth = theme.cache.$siteNav.parent().outerWidth() - 20;
+    var navWidth = theme.cache.$siteNav.parent().outerWidth() + 200;
     var navItemWidth = 0;
     theme.cache.$siteNav.find('> li').each(function() {
       var $el = $(this);

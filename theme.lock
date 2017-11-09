@@ -32,9 +32,9 @@ assets/respond-proxy.html:
 assets/respond.min.js:
   development: 2017-11-07T05:07:26-05:00   a2684e9b8fa50d6d11c56a9ada068528
 assets/theme.css.liquid:
-  development: 2017-11-08T12:03:52-05:00   d365bc9bfe061a481a3532b6b42f15a2
+  development: 2017-11-09T07:56:04-05:00   fa8edf1063451aaec07b88e8d9531858
 assets/theme.js.liquid:
-  development: 2017-11-07T05:07:26-05:00   99d72191ecf444663188df137f84d4b1
+  development: 2017-11-09T07:35:41-05:00   05788a468cba1d561e8c60686cd91d66
 assets/theme.scss.liquid:
   development: 2017-11-07T05:07:26-05:00   41817b9a6828448f56cccc440a37bb21
 assets/timber.scss.liquid:
@@ -42,11 +42,11 @@ assets/timber.scss.liquid:
 config/settings_data.json:
   development: 2017-11-07T05:07:24-05:00   c3c30e1ca83f135c280b13310574be50
 config/settings_schema.json:
-  development: 2017-11-07T05:07:27-05:00   4d07c12ff4a774fc37014b74d21c8e1f
+  development: 2017-11-08T14:07:31-05:00   6398f5f42a97d64a5fa9e72dc185cb5e
 layout/password.liquid:
   development: 2017-11-07T05:07:26-05:00   e3df81a186a3aaf1710cfc32ef51a558
 layout/theme.liquid:
-  development: 2017-11-07T11:12:30-05:00   9aa8261699986f48f571b2c20b03c525
+  development: 2017-11-08T14:10:56-05:00   9456a01a4087b0fe160dd2460614de13
 locales/de.json:
   development: 2017-11-07T05:07:26-05:00   09cf9a7ff0052d8691dfff54ced866c5
 locales/en.default.json:
@@ -90,7 +90,7 @@ sections/featured-video.liquid:
 sections/footer.liquid:
   development: 2017-11-07T05:07:24-05:00   09c4cbb15a45a2bb33e70183149c4b60
 sections/header.liquid:
-  development: 2017-11-08T12:23:50-05:00   1d246d416e960fe390118d3d38d5631e
+  development: 2017-11-09T08:28:29-05:00   61c35929c0b108e95187a1f3f071d74a
 sections/list-collections-template.liquid:
   development: 2017-11-07T05:07:24-05:00   cc519f30f6bced273d6c82201bb79c40
 sections/map.liquid:
@@ -184,7 +184,7 @@ templates/index.liquid:
 templates/list-collections.liquid:
   development: 2017-11-07T05:07:27-05:00   eabed71f62563b929b8da83a4aeacbfb
 templates/page.contact.liquid:
-  development: 2017-11-07T05:07:27-05:00   b31a760236911163d10b4a663a76c59d
+  development: 2017-11-09T07:48:50-05:00   17bbf253c4a99d9089546ee45487da2a
 templates/page.full-width.liquid:
   development: 2017-11-07T05:07:27-05:00   f21db2cc6691ac1165c7a07ff8bc11cb
 templates/page.liquid:

@@ -58,25 +58,16 @@
       <header class="site-header" role="banner">
         <div class="wrapper">
           <div class="grid--full">
-               <div class="grid__item medium--hide medium--one-sixth one-quarter">
-              <div class="site-nav--open site-nav--mobile">
-                <button type="button" class="icon-fallback-text site-nav__link site-nav__link--burger js-drawer-open-button-left" aria-controls="NavDrawer">
-                  <span class="burger-icon burger-icon--top"></span>
-                  <span class="burger-icon burger-icon--mid"></span>
-                  <span class="burger-icon burger-icon--bottom"></span>
-                  <span class="fallback-text">{{ 'general.drawers.navigation' | t }}</span>
-                </button>
-              </div>
-            </div>
-            <div class="grid__item large--one-quarter medium-down--one-whole">
+             
+            <div class="grid__item text-center large--one-quarter medium--one-whole">
               {% comment %}
                 Use the uploaded logo from theme settings if enabled.
                 Site name gets precedence with H1 tag on homepage, div on other pages.
               {% endcomment %}
               {% if template.name == 'index' %}
-                <h1 class="site-header__logo large--left" itemscope itemtype="http://schema.org/Organization">
+                <h1 class="site-header__logo text-center" itemscope itemtype="http://schema.org/Organization">
               {% else %}
-                <div class="h1 site-header__logo large--left" itemscope itemtype="http://schema.org/Organization">
+                <div class="h1 site-header__logo text-center" itemscope itemtype="http://schema.org/Organization">
               {% endif %}
                 {% if section.settings.logo_max_width != blank %}
                   {% capture image_size %}{{ section.settings.logo_max_width | escape }}x{% endcapture %}
@@ -102,7 +93,17 @@
                 </div>
               {% endif %}
             </div>
-            <div class="grid__item large--one-half large--text-center medium-down--one-whole">
+                <div class="grid__item text-center large--hide medium--hide small--one-half">
+              <div class="site-nav--open site-nav--mobile">
+                <button type="button" class="icon-fallback-text site-nav__link site-nav__link--burger js-drawer-open-button-left" aria-controls="NavDrawer">
+                  <span class="burger-icon burger-icon--top"></span>
+                  <span class="burger-icon burger-icon--mid"></span>
+                  <span class="burger-icon burger-icon--bottom"></span>
+                  <span class="fallback-text">{{ 'general.drawers.navigation' | t }}</span>
+                </button>
+              </div>
+            </div>
+            <div class="grid__item text-center large--one-half medium--one-whole  small--hide">
               {% comment %}
                 List out your main-menu linklist (default)
 
@@ -110,7 +111,7 @@
                   - http://docs.shopify.com/themes/liquid-variables/linklists
               {% endcomment %}
               <!-- begin site-nav -->
-              <ul class="site-nav" id="AccessibleNav">
+              <ul class="site-nav" id="Nav">
                 {% if section.settings.search == "box" %}
                 <li class="site-nav__item site-nav--search__bar medium-down--hide ">
                   {% include 'search-bar', search_btn_style: 'btn', search_bar_location: 'search-bar--header' %}
@@ -184,8 +185,8 @@
               </ul>
               <!-- //site-nav -->
             </div>
-            <div class="grid__item large--hide one-quarter">
-              <div class="site-nav--mobile text-right">
+            <div class="grid__item text-center large--hide medium--hide small--one-half">
+              <div class="site-nav--mobile text-center">
                 <a href="/cart" class="site-nav__link cart-link js-drawer-open-right" aria-controls="CartDrawer">
                   <span class="icon-fallback-text">
                     <span class="icon icon-cart" aria-hidden="true"></span>
