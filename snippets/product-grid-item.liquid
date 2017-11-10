@@ -102,7 +102,7 @@
     </a>
         <a href="{{ product.url | within: collection }}">
  <button class="btn product-detail">More Info</button></a>
-      <form  class="product-detail" action="/cart/add" method="post" id="AddToCartForm--{{ section.id }}"> <input type="hidden" name="return_to" value="back" />
+      <form  class="product-detail" action="/cart/add" method="post" id="AddToCartForm--{{ section.id }}"> 
     <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
     <input type="submit" value="Add to Cart" class="btn" />
           </form> 

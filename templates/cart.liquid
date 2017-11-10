@@ -61,7 +61,7 @@
                         {{ item.variant.title }}
                       </p>
                     {% endunless %}
-
+                     
                     {% if settings.product_vendor_enable %}
                       <p class="cart__product-meta">{{ item.vendor }}</p>
                     {% endif %}
@@ -103,7 +103,7 @@
                     <input type="number" name="updates[]" id="updates_{{ item.key }}" class="cart__product-qty" value="{{ item.quantity }}" min="0" data-id="{{ item.key }}">
 
                   </div>
-
+                     
                   <div class="grid__item two-thirds text-right">
                     {% if item.original_line_price != item.line_price %}
                       <small class="cart__price cart__price--strikethrough">{{ item.original_line_price | money }}</small>

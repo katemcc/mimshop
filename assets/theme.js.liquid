@@ -103,7 +103,7 @@ theme.Sections = function Sections() {
     .on('shopify:section:deselect', this._onDeselect.bind(this))
     .on('shopify:block:select', this._onBlockSelect.bind(this))
     .on('shopify:block:deselect', this._onBlockDeselect.bind(this));
-};
+  };
 
 theme.Sections.prototype = _.assignIn({}, theme.Sections.prototype, {
   _createInstance: function(container, constructor) {
@@ -124,6 +124,7 @@ theme.Sections.prototype = _.assignIn({}, theme.Sections.prototype, {
     });
 
     this.instances.push(instance);
+
   },
 
   _onSectionLoad: function(evt) {
@@ -135,7 +136,7 @@ theme.Sections.prototype = _.assignIn({}, theme.Sections.prototype, {
 
   _onSectionUnload: function(evt) {
     this.instances = _.filter(this.instances, function(instance) {
-      var isEventInstance = instance.id === evt.originalEvent.detail.sectionId;
+      var isEventInstance = (instance.id === evt.originalEvent.detail.sectionId);
 
       if (isEventInstance) {
         if (_.isFunction(instance.onUnload)) {
@@ -194,11 +195,9 @@ theme.Sections.prototype = _.assignIn({}, theme.Sections.prototype, {
   register: function(type, constructor) {
     this.constructors[type] = constructor;
 
-    $('[data-section-type=' + type + ']').each(
-      function(index, container) {
-        this._createInstance(container, constructor);
-      }.bind(this)
-    );
+    $('[data-section-type=' + type + ']').each(function(index, container) {
+      this._createInstance(container, constructor);
+    }.bind(this));
   }
 });
 
@@ -224,24 +223,21 @@ theme.Currency = (function() {
     }
     var value = '';
     var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
-    var formatString = format || moneyFormat;
+    var formatString = (format || moneyFormat);
 
     function formatWithDelimiters(number, precision, thousands, decimal) {
       thousands = thousands || ',';
       decimal = decimal || '.';
 
-      if (isNaN(number) || number === null) {
+      if (isNaN(number) || number == null) {
         return 0;
       }
 
       number = (number / 100.0).toFixed(precision);
 
       var parts = number.split('.');
-      var dollarsAmount = parts[0].replace(
-        /(\d)(?=(\d\d\d)+(?!\d))/g,
-        '$1' + thousands
-      );
-      var centsAmount = parts[1] ? decimal + parts[1] : '';
+      var dollarsAmount = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands);
+      var centsAmount = parts[1] ? (decimal + parts[1]) : '';
 
       return dollarsAmount + centsAmount;
     }
@@ -269,7 +265,7 @@ theme.Currency = (function() {
 
   return {
     formatMoney: formatMoney
-  };
+  }
 })();
 
 /**
@@ -280,6 +276,7 @@ theme.Currency = (function() {
  */
 
 theme.Images = (function() {
+
   /**
    * Preloads an image in memory and uses the browsers cache to store it until needed.
    *
@@ -331,9 +328,7 @@ theme.Images = (function() {
    * @returns {null}
    */
   function imageSize(src) {
-    var match = src.match(
-      /.+_((?:pico|icon|thumb|small|compact|medium|large|grande)|\d{1,4}x\d{0,4}|x\d{1,4})[.@]/
-    );
+    var match = src.match(/.+_((?:pico|icon|thumb|small|compact|medium|large|grande)|\d{1,4}x\d{0,4}|x\d{1,4})[_\.@]/);
 
     if (match !== null) {
       return match[1];
@@ -351,7 +346,7 @@ theme.Images = (function() {
    * @returns {*}
    */
   function getSizedImageUrl(src, size) {
-    if (size === null) {
+    if (size == null) {
       return src;
     }
 
@@ -359,11 +354,9 @@ theme.Images = (function() {
       return this.removeProtocol(src);
     }
 
-    var match = src.match(
-      /\.(jpg|jpeg|gif|png|bmp|bitmap|tiff|tif)(\?v=\d+)?$/i
-    );
+    var match = src.match(/\.(jpg|jpeg|gif|png|bmp|bitmap|tiff|tif)(\?v=\d+)?$/i);
 
-    if (match !== null) {
+    if (match != null) {
       var prefix = src.split(match[0]);
       var suffix = match[0];
 
@@ -399,6 +392,7 @@ theme.Images = (function() {
  */
 
 slate.Variants = (function() {
+
   /**
    * Variant constructor
    *
@@ -412,13 +406,11 @@ slate.Variants = (function() {
     this.enableHistoryState = options.enableHistoryState;
     this.currentVariant = this._getVariantFromOptions();
 
-    $(this.singleOptionSelector, this.$container).on(
-      'change',
-      this._onSelectChange.bind(this)
-    );
+    $(this.singleOptionSelector, this.$container).on('change', this._onSelectChange.bind(this));
   }
 
   Variants.prototype = _.assignIn({}, Variants.prototype, {
+
     /**
      * Get the currently selected options from add-to-cart form. Works with all
      * form input elements.
@@ -426,30 +418,27 @@ slate.Variants = (function() {
      * @return {array} options - Values of currently selected variants
      */
     _getCurrentOptions: function() {
-      var currentOptions = _.map(
-        $(this.singleOptionSelector, this.$container),
-        function(element) {
-          var $element = $(element);
-          var type = $element.attr('type');
-          var currentOption = {};
+      var currentOptions = _.map($(this.singleOptionSelector, this.$container), function(element) {
+        var $element = $(element);
+        var type = $element.attr('type');
+        var currentOption = {};
 
-          if (type === 'radio' || type === 'checkbox') {
-            if ($element[0].checked) {
-              currentOption.value = $element.val();
-              currentOption.index = $element.data('index');
-
-              return currentOption;
-            } else {
-              return false;
-            }
-          } else {
+        if (type === 'radio' || type === 'checkbox') {
+          if ($element[0].checked) {
             currentOption.value = $element.val();
             currentOption.index = $element.data('index');
 
             return currentOption;
+          } else {
+            return false;
           }
+        } else {
+          currentOption.value = $element.val();
+          currentOption.index = $element.data('index');
+
+          return currentOption;
         }
-      );
+      });
 
       // remove any unchecked input values if using radio buttons or checkboxes
       currentOptions = _.compact(currentOptions);
@@ -512,10 +501,7 @@ slate.Variants = (function() {
       var variantImage = variant.featured_image || {};
       var currentVariantImage = this.currentVariant.featured_image || {};
 
-      if (
-        !variant.featured_image ||
-        variantImage.src === currentVariantImage.src
-      ) {
+      if (!variant.featured_image || variantImage.src === currentVariantImage.src) {
         return;
       }
 
@@ -532,10 +518,7 @@ slate.Variants = (function() {
      * @return {event} variantPriceChange
      */
     _updatePrice: function(variant) {
-      if (
-        variant.price === this.currentVariant.price &&
-        variant.compare_at_price === this.currentVariant.compare_at_price
-      ) {
+      if (variant.price === this.currentVariant.price && variant.compare_at_price === this.currentVariant.compare_at_price) {
         return;
       }
 
@@ -573,14 +556,8 @@ slate.Variants = (function() {
         return;
       }
 
-      var newurl =
-        window.location.protocol +
-        '//' +
-        window.location.host +
-        window.location.pathname +
-        '?variant=' +
-        variant.id;
-      window.history.replaceState({ path: newurl }, '', newurl);
+      var newurl = window.location.protocol + '//' + window.location.host + window.location.pathname + '?variant=' + variant.id;
+      window.history.replaceState({path: newurl}, '', newurl);
     },
 
     /**
@@ -643,27 +620,25 @@ var Handlebars=function(){var e=function(){"use strict";function t(e){this.strin
   Customized version of Shopify's jQuery API
   (c) Copyright 2009-2015 Shopify Inc. Author: Caroline Schnapp. All Rights Reserved.
 ==============================================================================*/
-if (typeof ShopifyAPI === 'undefined') {
-  ShopifyAPI = {};
-}
+if ((typeof ShopifyAPI) === 'undefined') { ShopifyAPI = {}; }
 
 /*============================================================================
   API Helper Functions
 ==============================================================================*/
 function attributeToString(attribute) {
-  if (typeof attribute !== 'string') {
+  if ((typeof attribute) !== 'string') {
     attribute += '';
     if (attribute === 'undefined') {
       attribute = '';
     }
   }
   return jQuery.trim(attribute);
-}
+};
 
 /*============================================================================
   API Functions
 ==============================================================================*/
-ShopifyAPI.onCartUpdate = function() {
+ShopifyAPI.onCartUpdate = function(cart) {
   // alert('There are now ' + cart.item_count + ' items in the cart.');
 };
 
@@ -674,9 +649,10 @@ ShopifyAPI.updateCartNote = function(note, callback) {
     data: 'note=' + attributeToString(note),
     dataType: 'json',
     success: function(cart) {
-      if (typeof callback === 'function') {
+      if ((typeof callback) === 'function') {
         callback(cart);
-      } else {
+      }
+      else {
         ShopifyAPI.onCartUpdate(cart);
       }
     },
@@ -687,10 +663,10 @@ ShopifyAPI.updateCartNote = function(note, callback) {
   jQuery.ajax(params);
 };
 
-ShopifyAPI.onError = function(XMLHttpRequest) {
+ShopifyAPI.onError = function(XMLHttpRequest, textStatus) {
   var data = eval('(' + XMLHttpRequest.responseText + ')');
-  if (data.message) {
-    alert(data.message + '(' + data.status + '): ' + data.description);
+  if (!!data.message) {
+    alert(data.message + '(' + data.status  + '): ' + data.description);
   }
 };
 
@@ -706,16 +682,18 @@ ShopifyAPI.addItemFromForm = function(form, callback, errorCallback) {
     data: jQuery(form).serialize(),
     dataType: 'json',
     success: function(line_item) {
-      if (typeof callback === 'function') {
+      if ((typeof callback) === 'function') {
         callback(line_item, form);
-      } else {
+      }
+      else {
         ShopifyAPI.onItemAdded(line_item, form);
       }
     },
     error: function(XMLHttpRequest, textStatus) {
-      if (typeof errorCallback === 'function') {
+      if ((typeof errorCallback) === 'function') {
         errorCallback(XMLHttpRequest, textStatus);
-      } else {
+      }
+      else {
         ShopifyAPI.onError(XMLHttpRequest, textStatus);
       }
     }
@@ -725,10 +703,11 @@ ShopifyAPI.addItemFromForm = function(form, callback, errorCallback) {
 
 // Get from cart.js returns the cart in JSON
 ShopifyAPI.getCart = function(callback) {
-  jQuery.getJSON('/cart.js', function(cart) {
-    if (typeof callback === 'function') {
+  jQuery.getJSON('/cart.js', function (cart, textStatus) {
+    if ((typeof callback) === 'function') {
       callback(cart);
-    } else {
+    }
+    else {
       ShopifyAPI.onCartUpdate(cart);
     }
   });
@@ -742,9 +721,10 @@ ShopifyAPI.changeItem = function(line, quantity, callback) {
     data: 'quantity=' + quantity + '&line=' + line,
     dataType: 'json',
     success: function(cart) {
-      if (typeof callback === 'function') {
+      if ((typeof callback) === 'function') {
         callback(cart);
-      } else {
+      }
+      else {
         ShopifyAPI.onCartUpdate(cart);
       }
     },
@@ -759,6 +739,7 @@ ShopifyAPI.changeItem = function(line, quantity, callback) {
   Ajax Shopify Add To Cart
 ==============================================================================*/
 var ajaxCart = (function(module, $) {
+
   'use strict';
 
   // Public functions
@@ -768,50 +749,37 @@ var ajaxCart = (function(module, $) {
   var settings, isUpdating, $body;
 
   // Private plugin variables
-  var $formContainer,
-    $addToCart,
-    $cartCountSelector,
-    $cartCostSelector,
-    $cartContainer;
+  var $formContainer, $addToCart, $cartCountSelector, $cartCostSelector, $cartContainer, $drawerContainer;
 
   // Private functions
-  var updateCountPrice,
-    formOverride,
-    itemAddedCallback,
-    itemErrorCallback,
-    cartUpdateCallback,
-    buildCart,
-    cartCallback,
-    adjustCart,
-    adjustCartCallback,
-    qtySelectors,
-    validateQty;
+  var updateCountPrice, formOverride, itemAddedCallback, itemErrorCallback, cartUpdateCallback, buildCart, cartCallback, adjustCart, adjustCartCallback, qtySelectors, validateQty;
 
   /*============================================================================
     Initialise the plugin and define global options
   ==============================================================================*/
-  init = function(options) {
+  init = function (options) {
+
     // Default settings
     settings = {
-      formSelector: 'form[action^="/cart/add"]',
-      cartContainer: '#CartContainer',
-      addToCartSelector: 'input[type="submit"]',
-      cartCountSelector: null,
-      cartCostSelector: null,
-      moneyFormat: '${{amount}}',
-      disableAjaxCart: false,
-      enableQtySelectors: true
+      formSelector       : 'form[action^="/cart/add"]',
+      cartContainer      : '#CartContainer',
+      addToCartSelector  : 'input[type="submit"]',
+      cartCountSelector  : null,
+      cartCostSelector   : null,
+      moneyFormat        : '${{amount}}',
+      disableAjaxCart    : false,
+      enableQtySelectors : true
     };
 
     // Override defaults with arguments
     $.extend(settings, options);
 
     // Select DOM elements
-    $formContainer = $(settings.formSelector);
-    $cartContainer = $(settings.cartContainer);
-    $addToCart = $formContainer.find(settings.addToCartSelector);
+    $formContainer     = $(settings.formSelector);
+    $cartContainer     = $(settings.cartContainer);
+    $addToCart         = $formContainer.find(settings.addToCartSelector);
     $cartCountSelector = $(settings.cartCountSelector);
-    $cartCostSelector = $(settings.cartCostSelector);
+    $cartCostSelector  = $(settings.cartCostSelector);
 
     // General Selectors
     $body = $('body');
@@ -833,12 +801,12 @@ var ajaxCart = (function(module, $) {
     adjustCart();
   };
 
-  loadCart = function() {
+  loadCart = function () {
     $body.addClass('drawer--is-loading');
     ShopifyAPI.getCart(cartUpdateCallback);
   };
 
-  updateCountPrice = function(cart) {
+  updateCountPrice = function (cart) {
     if ($cartCountSelector) {
       $cartCountSelector.html(cart.item_count).removeClass('hidden-count');
 
@@ -847,13 +815,11 @@ var ajaxCart = (function(module, $) {
       }
     }
     if ($cartCostSelector) {
-      $cartCostSelector.html(
-        theme.Currency.formatMoney(cart.total_price, settings.moneyFormat)
-      );
+      $cartCostSelector.html(theme.Currency.formatMoney(cart.total_price, settings.moneyFormat));
     }
   };
 
-  formOverride = function() {
+  formOverride = function () {
     $formContainer.on('submit', function(evt) {
       evt.preventDefault();
 
@@ -863,87 +829,73 @@ var ajaxCart = (function(module, $) {
       // Remove any previous quantity errors
       $('.qty-error').remove();
 
-      ShopifyAPI.addItemFromForm(
-        evt.target,
-        itemAddedCallback,
-        itemErrorCallback
-      );
+      ShopifyAPI.addItemFromForm(evt.target, itemAddedCallback, itemErrorCallback);
     });
   };
 
-  itemAddedCallback = function() {
+  itemAddedCallback = function (product) {
     $addToCart.removeClass('is-adding').addClass('is-added');
 
     ShopifyAPI.getCart(cartUpdateCallback);
   };
 
-  itemErrorCallback = function(XMLHttpRequest) {
+  itemErrorCallback = function (XMLHttpRequest, textStatus) {
     var data = eval('(' + XMLHttpRequest.responseText + ')');
     $addToCart.removeClass('is-adding is-added');
 
-    if (data.message) {
-      if (data.status === 422) {
-        $formContainer.after(
-          '<div class="errors qty-error">' + data.description + '</div>'
-        );
+    if (!!data.message) {
+      if (data.status == 422) {
+        $formContainer.after('<div class="errors qty-error">'+ data.description +'</div>')
       }
     }
   };
 
-  cartUpdateCallback = function(cart) {
+  cartUpdateCallback = function (cart) {
     // Update quantity and price
     updateCountPrice(cart);
     buildCart(cart);
   };
 
-  buildCart = function(cart) {
+  buildCart = function (cart) {
     // Start with a fresh cart div
     $cartContainer.empty();
 
     // Show empty cart
     if (cart.item_count === 0) {
-      $cartContainer.append(
-        '<p class="cart--empty-message">' +
-          theme.strings.cartEmpty +
-          '</p>\n' +
-          '<p class="cookie-message">' +
-          theme.strings.cartCookies +
-          '</p>'
-      );
+      $cartContainer
+        .append('<p class="cart--empty-message">' + {{ 'cart.general.empty' | t | json }} + '</p>\n'
+        + '<p class="cookie-message">' + {{ 'cart.general.cookies_required' | t | json }} + '</p>');
       cartCallback(cart);
       return;
     }
 
     // Handlebars.js cart layout
     var items = [],
-      item = {},
-      data = {},
-      source = $('#CartTemplate').html(),
-      template = Handlebars.compile(source);
+        item = {},
+        data = {},
+        source = $("#CartTemplate").html(),
+        template = Handlebars.compile(source);
 
     // Add each item to our handlebars.js data
     $.each(cart.items, function(index, cartItem) {
+
       /* Hack to get product image thumbnail
        *   - If image is not null
        *     - Remove file extension, add _small, and re-add extension
        *     - Create server relative link
        *   - A hard-coded url of no-image
       */
-      var prodImg;
-      if (cartItem.image !== null) {
-        prodImg = cartItem.image
-          .replace(/(\.[^.]*)$/, '_small$1')
-          .replace('http:', '');
+      if (cartItem.image != null){
+        var prodImg = cartItem.image.replace(/(\.[^.]*)$/, "_small$1").replace('http:', '');
       } else {
-        prodImg =
-          '//cdn.shopify.com/s/assets/admin/no-image-medium-cc9732cb976dd349a0df1d39816fbcc7.gif';
+        var prodImg = "//cdn.shopify.com/s/assets/admin/no-image-medium-cc9732cb976dd349a0df1d39816fbcc7.gif";
       }
 
       if (cartItem.properties !== null) {
         $.each(cartItem.properties, function(key, value) {
           if (key.charAt(0) === '_' || !value) {
-            delete cartItem.properties[key];
-          }
+             delete cartItem.properties[key];
+           }
         });
       }
 
@@ -960,15 +912,9 @@ var ajaxCart = (function(module, $) {
         itemMinus: cartItem.quantity - 1,
         itemQty: cartItem.quantity,
         price: theme.Currency.formatMoney(cartItem.price, settings.moneyFormat),
-        discountedPrice: theme.Currency.formatMoney(
-          cartItem.price - cartItem.total_discount / cartItem.quantity,
-          settings.moneyFormat
-        ),
+        discountedPrice: theme.Currency.formatMoney((cartItem.price - (cartItem.total_discount/cartItem.quantity)), settings.moneyFormat),
         discounts: cartItem.discounts,
-        discountsApplied:
-          cartItem.price === cartItem.price - cartItem.total_discount
-            ? false
-            : true,
+        discountsApplied: cartItem.price === (cartItem.price - cartItem.total_discount) ? false : true,
         vendor: cartItem.vendor
       };
 
@@ -979,20 +925,8 @@ var ajaxCart = (function(module, $) {
     data = {
       items: items,
       note: cart.note,
-      totalPrice: theme.Currency.formatMoney(
-        cart.total_price,
-        settings.moneyFormat
-      ),
-      totalCartDiscount:
-        cart.total_discount === 0
-          ? 0
-          : theme.strings.cartSavings.replace(
-              '[savings]',
-              theme.Currency.formatMoney(
-                cart.total_discount,
-                settings.moneyFormat
-              )
-            )
+      totalPrice: theme.Currency.formatMoney(cart.total_price, settings.moneyFormat),
+      totalCartDiscount: cart.total_discount === 0 ? 0 : {{ 'cart.general.savings_html' | t: price: '[savings]' | json }}.replace('[savings]', theme.Currency.formatMoney(cart.total_discount, settings.moneyFormat))
     };
 
     $cartContainer.append(template(data));
@@ -1009,7 +943,7 @@ var ajaxCart = (function(module, $) {
     }
   };
 
-  adjustCart = function() {
+  adjustCart = function () {
     // Delegate all events because elements reload with the cart
 
     // Add or remove from the quantity
@@ -1018,11 +952,11 @@ var ajaxCart = (function(module, $) {
         return;
       }
       var $el = $(this),
-        line = $el.data('line'),
-        $qtySelector = $el.siblings('.ajaxcart__qty-num'),
-        qty = parseInt($qtySelector.val().replace(/\D/g, ''));
+          line = $el.data('line'),
+          $qtySelector = $el.siblings('.ajaxcart__qty-num'),
+          qty = parseInt($qtySelector.val().replace(/\D/g, ''));
 
-      qty = validateQty(qty);
+      var qty = validateQty(qty);
 
       // Add or subtract from the current quantity
       if ($el.hasClass('ajaxcart__qty--plus')) {
@@ -1047,10 +981,10 @@ var ajaxCart = (function(module, $) {
         return;
       }
       var $el = $(this),
-        line = $el.data('line'),
-        qty = parseInt($el.val().replace(/\D/g, ''));
+          line = $el.data('line'),
+          qty = parseInt($el.val().replace(/\D/g, ''));
 
-      qty = validateQty(qty);
+      var qty = validateQty(qty);
 
       // If it has a data-line, update the cart
       if (line) {
@@ -1077,9 +1011,7 @@ var ajaxCart = (function(module, $) {
       isUpdating = true;
 
       // Add activity classes when changing cart quantities
-      var $row = $('.ajaxcart__row[data-line="' + line + '"]').addClass(
-        'is-loading'
-      );
+      var $row = $('.ajaxcart__row[data-line="' + line + '"]').addClass('is-loading');
 
       if (qty === 0) {
         $row.parent().addClass('is-removed');
@@ -1096,11 +1028,11 @@ var ajaxCart = (function(module, $) {
       var newNote = $(this).val();
 
       // Update the cart note in case they don't click update/checkout
-      ShopifyAPI.updateCartNote(newNote, function() {});
+      ShopifyAPI.updateCartNote(newNote, function(cart) {});
     });
   };
 
-  adjustCartCallback = function(cart) {
+  adjustCartCallback = function (cart) {
     // Update quantity and price
     updateCountPrice(cart);
 
@@ -1108,35 +1040,35 @@ var ajaxCart = (function(module, $) {
     setTimeout(function() {
       ShopifyAPI.getCart(buildCart);
       isUpdating = false;
-    }, 150);
+    }, 150)
   };
 
   qtySelectors = function() {
     // Change number inputs to JS ones, similar to ajax cart but without API integration.
     // Make sure to add the existing name and id to the new input element
-    var $numInputs = $('input[type="number"]');
+    var numInputs = $('input[type="number"]');
 
-    if ($numInputs.length) {
-      $numInputs.each(function() {
+    if (numInputs.length) {
+      numInputs.each(function() {
         var $el = $(this),
-          currentQty = $el.val(),
-          inputName = $el.attr('name'),
-          inputId = $el.attr('id');
+            currentQty = $el.val(),
+            inputName = $el.attr('name'),
+            inputId = $el.attr('id');
 
         var itemAdd = currentQty + 1,
-          itemMinus = currentQty - 1,
-          itemQty = currentQty;
+            itemMinus = currentQty - 1,
+            itemQty = currentQty;
 
-        var source = $('#JsQty').html(),
-          template = Handlebars.compile(source),
-          data = {
-            key: $el.data('id'),
-            itemQty: itemQty,
-            itemAdd: itemAdd,
-            itemMinus: itemMinus,
-            inputName: inputName,
-            inputId: inputId
-          };
+        var source   = $("#JsQty").html(),
+            template = Handlebars.compile(source),
+            data = {
+              key: $el.data('id'),
+              itemQty: itemQty,
+              itemAdd: itemAdd,
+              itemMinus: itemMinus,
+              inputName: inputName,
+              inputId: inputId
+            };
 
         // Append new quantity selector then remove original
         $el.after(template(data)).remove();
@@ -1145,10 +1077,11 @@ var ajaxCart = (function(module, $) {
       // Setup listeners to add/subtract from the input
       $('.js-qty__adjust').on('click', function() {
         var $el = $(this),
-          $qtySelector = $el.siblings('.js-qty__num'),
-          qty = parseInt($qtySelector.val().replace(/\D/g, ''));
+            id = $el.data('id'),
+            $qtySelector = $el.siblings('.js-qty__num'),
+            qty = parseInt($qtySelector.val().replace(/\D/g, ''));
 
-        qty = validateQty(qty);
+        var qty = validateQty(qty);
 
         // Add or subtract from the current quantity
         if ($el.hasClass('js-qty__adjust--plus')) {
@@ -1164,8 +1097,8 @@ var ajaxCart = (function(module, $) {
     }
   };
 
-  validateQty = function(qty) {
-    if (parseFloat(qty) === parseInt(qty) && !isNaN(qty)) {
+  validateQty = function (qty) {
+    if((parseFloat(qty) == parseInt(qty)) && !isNaN(qty)) {
       // We have a valid number!
     } else {
       // Not a number. Default to 1.
@@ -1180,7 +1113,8 @@ var ajaxCart = (function(module, $) {
   };
 
   return module;
-})(ajaxCart || {}, jQuery);
+
+}(ajaxCart || {}, jQuery));
 
 {% endif %}
 /*============================================================================
@@ -1190,29 +1124,29 @@ var ajaxCart = (function(module, $) {
 ==============================================================================*/
 window.timber = window.timber || {};
 
-timber.initCache = function() {
+timber.initCache = function () {
   timber.cache = {
     // General
-    $html: $('html'),
-    $body: $('body'),
+    $html                    : $('html'),
+    $body                    : $('body'),
 
     // Navigation
-    $navigation: $('#AccessibleNav'),
-    $mobileSubNavToggle: $('.mobile-nav__toggle-btn'),
+    $navigation              : $('#AccessibleNav'),
+    $mobileSubNavToggle      : $('.mobile-nav__toggle-btn'),
 
     // Product Page
-    $optionSelector: $('.single-option-selector'),
+    $optionSelector          : $('.single-option-selector'),
 
     // Customer Pages
-    $recoverPasswordLink: $('#RecoverPassword'),
-    $hideRecoverPasswordLink: $('#HideRecoverPasswordLink'),
-    $recoverPasswordForm: $('#RecoverPasswordForm'),
-    $customerLoginForm: $('#CustomerLoginForm'),
-    $passwordResetSuccess: $('#ResetSuccess')
+    $recoverPasswordLink     : $('#RecoverPassword'),
+    $hideRecoverPasswordLink : $('#HideRecoverPasswordLink'),
+    $recoverPasswordForm     : $('#RecoverPasswordForm'),
+    $customerLoginForm       : $('#CustomerLoginForm'),
+    $passwordResetSuccess    : $('#ResetSuccess')
   };
 };
 
-timber.init = function() {
+timber.init = function () {
   timber.initCache();
   timber.accessibleNav();
   timber.drawersInit();
@@ -1220,14 +1154,14 @@ timber.init = function() {
   timber.loginForms();
 };
 
-timber.accessibleNav = function() {
+timber.accessibleNav = function () {
   var $nav = timber.cache.$navigation,
-    $allLinks = $nav.find('a'),
-    $topLevel = $nav.children('li').find('a'),
-    $parents = $nav.find('.site-nav--has-dropdown'),
-    $subMenuLinks = $nav.find('.site-nav__dropdown').find('a'),
-    activeClass = 'nav-hover',
-    focusClass = 'nav-focus';
+      $allLinks = $nav.find('a'),
+      $topLevel = $nav.children('li').find('a'),
+      $parents = $nav.find('.site-nav--has-dropdown'),
+      $subMenuLinks = $nav.find('.site-nav__dropdown').find('a'),
+      activeClass = 'nav-hover',
+      focusClass = 'nav-focus';
 
   // Mouseenter
   $parents.on('mouseenter touchstart', function(evt) {
@@ -1261,9 +1195,11 @@ timber.accessibleNav = function() {
   });
 
   // accessibleNav private methods
-  function handleFocus($el) {
-    var isSubItem = $('.site-nav__dropdown').has($el).length,
-      $newFocus = null;
+  function handleFocus ($el) {
+    var $subMenu = $el.next('ul'),
+        hasSubMenu = $subMenu.hasClass('sub-nav') ? true : false,
+        isSubItem = $('.site-nav__dropdown').has($el).length,
+        $newFocus = null;
 
     // Add focus class for top level items, or keep menu shown
     if (!isSubItem) {
@@ -1275,7 +1211,7 @@ timber.accessibleNav = function() {
     }
   }
 
-  function showDropdown($el) {
+  function showDropdown ($el) {
     $el.addClass(activeClass);
 
     setTimeout(function() {
@@ -1285,47 +1221,45 @@ timber.accessibleNav = function() {
     }, 250);
   }
 
-  function hideDropdown($el) {
+  function hideDropdown ($el) {
     $el.removeClass(activeClass);
     timber.cache.$body.off('touchstart');
   }
 
-  function addFocus($el) {
+  function addFocus ($el) {
     $el.addClass(focusClass);
   }
 
-  function removeFocus($el) {
+  function removeFocus ($el) {
     $el.removeClass(focusClass);
   }
 };
 
-timber.drawersInit = function() {
+timber.drawersInit = function () {
   timber.LeftDrawer = new timber.Drawers('NavDrawer', 'left');
   if (theme.settings.cartType === 'drawer') {
     timber.RightDrawer = new timber.Drawers('CartDrawer', 'right', {
-      onDrawerOpen: ajaxCart.load
+      'onDrawerOpen': ajaxCart.load
     });
   }
 };
 
-timber.getHash = function() {
+timber.getHash = function () {
   return window.location.hash;
 };
 
-timber.responsiveVideos = function() {
-  var $iframeVideo = $(
-    'iframe[src*="youtube.com/embed"], iframe[src*="player.vimeo"]'
-  );
+timber.responsiveVideos = function () {
+  var $iframeVideo = $('iframe[src*="youtube.com/embed"], iframe[src*="player.vimeo"]');
   var $iframeReset = $iframeVideo.add('iframe#admin_bar_iframe');
 
-  $iframeVideo.each(function() {
+  $iframeVideo.each(function () {
     // Add wrapper to make video responsive
     if (!$(this).parents('.video-wrapper').length) {
       $(this).wrap('<div class="video-wrapper"></div>');
     }
   });
 
-  $iframeReset.each(function() {
+  $iframeReset.each(function () {
     // Re-set the src attribute on each iframe after page load
     // for Chrome's "incorrect iFrame content on 'back'" bug.
     // https://code.google.com/p/chromium/issues/detail?id=395791
@@ -1334,7 +1268,7 @@ timber.responsiveVideos = function() {
   });
 };
 
-timber.loginForms = function() {
+timber.loginForms = function () {
   function showRecoverPasswordForm() {
     timber.cache.$recoverPasswordForm.show();
     timber.cache.$customerLoginForm.hide();
@@ -1356,12 +1290,12 @@ timber.loginForms = function() {
   });
 
   // Allow deep linking to recover password form
-  if (timber.getHash() === '#recover') {
+  if (timber.getHash() == '#recover') {
     showRecoverPasswordForm();
   }
 };
 
-timber.resetPasswordSuccess = function() {
+timber.resetPasswordSuccess = function () {
   timber.cache.$passwordResetSuccess.show();
 };
 
@@ -1369,22 +1303,19 @@ timber.resetPasswordSuccess = function() {
   Drawer modules
   - Docs http://shopify.github.io/Timber/#drawers
 ==============================================================================*/
-timber.Drawers = (function() {
-  var Drawer = function(id, position, options) {
+timber.Drawers = (function () {
+  var Drawer = function (id, position, options) {
     var defaults = {
       close: '.js-drawer-close',
-      open: '.js-drawer-open-button-' + position,
-      openButtonLeftClass: 'js-drawer-open-button-left',
-      drawerLeftClass: 'drawer--left',
-      drawerRightClass: 'drawer--right',
+      open: '.js-drawer-open-' + position,
       openClass: 'js-drawer-open',
       dirOpenClass: 'js-drawer-open-' + position
     };
 
-    this.nodes = {
-      $parent: $('body, html'),
-      $page: $('#PageContainer'),
-      $moved: $('.page-container')
+    this.$nodes = {
+      parent: $('body, html'),
+      page: $('#PageContainer'),
+      moved: $('.page-container')
     };
 
     this.config = $.extend(defaults, options);
@@ -1400,7 +1331,7 @@ timber.Drawers = (function() {
     this.init();
   };
 
-  Drawer.prototype.init = function() {
+  Drawer.prototype.init = function () {
     var $openBtn = $(this.config.open);
 
     // Add aria controls
@@ -1410,36 +1341,14 @@ timber.Drawers = (function() {
     this.$drawer.find(this.config.close).on('click', $.proxy(this.close, this));
   };
 
-  Drawer.prototype.open = function(evt) {
+  Drawer.prototype.open = function (evt) {
     // Keep track if drawer was opened from a click, or called by another function
     var externalCall = false;
 
-    // Other drawers that might be open (will be closed later)
-    var $otherDrawers = $('.drawer').not(this.$drawer);
-
     // don't open an opened drawer
     if (this.drawerIsOpen) {
-      if (evt) {
-        evt.preventDefault();
-      }
       return;
     }
-
-    // Close other drawers if they are open
-    var self = this;
-    $otherDrawers.each(function() {
-      if (!$(this).hasClass(self.config.openClass)) {
-        return;
-      }
-
-      if ($(this).hasClass(self.config.drawerLeftClass)) {
-        timber.LeftDrawer.close();
-      }
-
-      if ($(this).hasClass(self.config.drawerRightClass)) {
-        timber.RightDrawer.close();
-      }
-    });
 
     // Prevent following href if link is clicked
     if (evt) {
@@ -1462,13 +1371,10 @@ timber.Drawers = (function() {
 
     // Add is-transitioning class to moved elements on open so drawer can have
     // transition for close animation
-    this.nodes.$moved.addClass('is-transitioning');
+    this.$nodes.moved.addClass('is-transitioning');
     this.$drawer.prepareTransition();
 
-    this.nodes.$parent.addClass(
-      this.config.openClass + ' ' + this.config.dirOpenClass
-    );
-    this.$drawer.addClass(this.config.openClass);
+    this.$nodes.parent.addClass(this.config.openClass + ' ' + this.config.dirOpenClass);
     this.drawerIsOpen = true;
 
     // Set focus on drawer
@@ -1478,10 +1384,7 @@ timber.Drawers = (function() {
     });
 
     // Run function when draw opens if set
-    if (
-      this.config.onDrawerOpen &&
-      typeof this.config.onDrawerOpen === 'function'
-    ) {
+    if (this.config.onDrawerOpen && typeof(this.config.onDrawerOpen) == 'function') {
       if (!externalCall) {
         this.config.onDrawerOpen();
       }
@@ -1494,7 +1397,7 @@ timber.Drawers = (function() {
     this.bindEvents();
   };
 
-  Drawer.prototype.close = function() {
+  Drawer.prototype.close = function () {
     // don't close a closed drawer
     if (!this.drawerIsOpen) {
       return;
@@ -1504,13 +1407,10 @@ timber.Drawers = (function() {
     $(document.activeElement).trigger('blur');
 
     // Ensure closing transition is applied to moved elements, like the nav
-    this.nodes.$moved.prepareTransition({ disableExisting: true });
+    this.$nodes.moved.prepareTransition({ disableExisting: true });
     this.$drawer.prepareTransition({ disableExisting: true });
 
-    this.nodes.$parent.removeClass(
-      this.config.dirOpenClass + ' ' + this.config.openClass
-    );
-    this.$drawer.removeClass(this.config.openClass);
+    this.$nodes.parent.removeClass(this.config.dirOpenClass + ' ' + this.config.openClass);
 
     this.drawerIsOpen = false;
 
@@ -1535,7 +1435,7 @@ timber.Drawers = (function() {
   * @param {jQuery} options.$elementToFocus - Element to be focused when focus leaves container
   * @param {string} options.namespace - Namespace used for new focus event handler
   */
-  Drawer.prototype.trapFocus = function(options) {
+  Drawer.prototype.trapFocus = function (options) {
     var eventName = options.namespace
       ? 'focusin.' + options.namespace
       : 'focusin';
@@ -1547,11 +1447,8 @@ timber.Drawers = (function() {
 
     options.$elementToFocus.focus();
 
-    $(document).on(eventName, function(evt) {
-      if (
-        options.$container[0] !== evt.target &&
-        !options.$container.has(evt.target).length
-      ) {
+    $(document).on(eventName, function (evt) {
+      if (options.$container[0] !== evt.target && !options.$container.has(evt.target).length) {
         options.$container.focus();
       }
     });
@@ -1564,7 +1461,7 @@ timber.Drawers = (function() {
    * @param {jQuery} options.$container - Container to trap focus within
    * @param {string} options.namespace - Namespace used for new focus event handler
    */
-  Drawer.prototype.removeTrapFocus = function(options) {
+  Drawer.prototype.removeTrapFocus = function (options) {
     var eventName = options.namespace
       ? 'focusin.' + options.namespace
       : 'focusin';
@@ -1578,52 +1475,27 @@ timber.Drawers = (function() {
 
   Drawer.prototype.bindEvents = function() {
     // Lock scrolling on mobile
-    this.nodes.$page.on('touchmove.drawer', function() {
+    this.$nodes.page.on('touchmove.drawer', function () {
       return false;
     });
 
-    // Clicking out of drawer closes it on mobile
-    this.nodes.$page.on(
-      'click.drawer',
-      $.proxy(function() {
-        this.close();
-        return false;
-      }, this)
-    );
-
-    // The hamburger 'open' button changes to a 'close' button when the drawer
-    // is open. Clicking on it will close the drawer.
-    if (this.$activeSource !== undefined) {
-      this.$activeSource.on(
-        'click.drawer',
-        $.proxy(function() {
-          if (!this.$activeSource.hasClass(this.config.openButtonLeftClass)) {
-            return;
-          }
-
-          this.close();
-        }, this)
-      );
-    }
+    // Clicking out of drawer closes it
+    this.$nodes.page.on('click.drawer', $.proxy(function () {
+      this.close();
+      return false;
+    }, this));
 
     // Pressing escape closes drawer
-    this.nodes.$parent.on(
-      'keyup.drawer',
-      $.proxy(function(evt) {
-        if (evt.keyCode === 27) {
-          this.close();
-        }
-      }, this)
-    );
+    this.$nodes.parent.on('keyup.drawer', $.proxy(function(evt) {
+      if (evt.keyCode === 27) {
+        this.close();
+      }
+    }, this));
   };
 
   Drawer.prototype.unbindEvents = function() {
-    if (this.$activeSource !== undefined) {
-      this.$activeSource.off('.drawer');
-    }
-
-    this.nodes.$page.off('.drawer');
-    this.nodes.$parent.off('.drawer');
+    this.$nodes.page.off('.drawer');
+    this.$nodes.parent.off('.drawer');
   };
 
   return Drawer;
@@ -1642,18 +1514,7 @@ $(timber.init);
  * Run function after window resize
  * http://stackoverflow.com/questions/2854407/javascript-jquery-window-resize-how-to-fire-after-the-resize-is-completed
  */
-var afterResize = (function() {
-  var t = {};
-  return function(callback, ms, uniqueId) {
-    if (!uniqueId) {
-      uniqueId = "Don't call this twice without a uniqueId";
-    }
-    if (t[uniqueId]) {
-      clearTimeout(t[uniqueId]);
-    }
-    t[uniqueId] = setTimeout(callback, ms);
-  };
-})();
+var afterResize=(function(){var t={};return function(callback,ms,uniqueId){if(!uniqueId){uniqueId="Don't call this twice without a uniqueId";}if(t[uniqueId]){clearTimeout(t[uniqueId]);}t[uniqueId]=setTimeout(callback,ms);};})();
 
 var slickTheme = (function(module, $) {
   'use strict';
@@ -1662,64 +1523,51 @@ var slickTheme = (function(module, $) {
   var init, onInit, beforeChange, afterChange;
 
   // Private variables
-  var settings,
-    $slider,
-    $allSlides,
-    $activeSlide,
-    windowHeight,
-    scrolled,
-    $heroText,
-    $heroImage;
+  var settings, $slider, $allSlides, $activeSlide, $slickDots, windowHeight, scrolled, $heroText, $heroImage;
   var currentActiveSlide = 0;
 
   // Private functions
-  var cacheObjects,
-    checkFirstOnIndex,
-    setFullScreen,
-    sizeFullScreen,
-    setParallax,
-    calculateParallax,
-    fixIE8;
+  var cacheObjects, checkFirstOnIndex, setFullScreen, sizeFullScreen, setParallax, calculateParallax, fixIE8;
 
   /*============================================================================
    Initialise the plugin and define global options
   ==============================================================================*/
-  cacheObjects = function() {
+  cacheObjects = function () {
     slickTheme.cache = {
-      $html: $('html'),
-      $window: $(window),
-      $hero: $('#Hero'),
-      $heroImage: $('.hero__image'),
+      $html      : $('html'),
+      $window    : $(window),
+      $hero      : $('#Hero'),
+      $heroImage : $('.hero__image'),
       $headerWrapper: $('.header-wrapper')
     };
 
     slickTheme.vars = {
-      slideClass: 'slick-slide',
-      activeClass: 'slick-active',
-      hiddenClass: 'hero__slide--hidden',
-      heroHeaderClass: 'hero__header'
+      slideClass      : 'slick-slide',
+      activeClass     : 'slick-active',
+      hiddenClass     : 'hero__slide--hidden',
+      heroHeaderClass : 'hero__header'
     };
   };
 
-  init = function(options) {
+  init = function (options) {
     cacheObjects();
 
     // Default settings
     settings = {
       // User options
-      $element: null,
-      fullscreen: false,
-      parallax: false,
+      $element       : null,
+      fullscreen     : false,
+      parallax       : false,
 
       // Private settings
-      isTouch: Modernizr.touch ? true : false,
+      isTouch        : Modernizr.touch ? true : false,
 
       // Slick options
-      accessibility: true,
-      arrows: false,
-      dots: true,
-      focusOnChange: true,
-      adaptiveHeight: true
+      accessibility  : true,
+      arrows         : false,
+      dots           : true,
+      focusOnChange  : true,
+      adaptiveHeight : true
     };
 
     // Override defaults with arguments
@@ -1739,35 +1587,36 @@ var slickTheme = (function(module, $) {
      *   - https://github.com/kenwheeler/slick/#options
      */
     settings.$element.slick({
-      accessibility: settings.accessibility,
-      arrows: settings.arrows,
-      dots: settings.dots,
-      adaptiveHeight: settings.fullscreen ? false : settings.adaptiveHeight,
-      draggable: false,
-      fade: true,
-      focusOnChange: settings.focusOnChange,
+      accessibility  : settings.accessibility,
+      arrows         : settings.arrows,
+      dots           : settings.dots,
+      adaptiveHeight : settings.fullscreen ? false : settings.adaptiveHeight,
+      draggable      : false,
+      fade           : true,
+      focusOnChange  : settings.focusOnChange,
       //autoplay       : theme.strings.slickAuto,
       //autoplaySpeed  : theme.strings.slickAutoSpeed,
-      autoplay: slickTheme.cache.$hero.data('autoplay'),
-      autoplaySpeed: slickTheme.cache.$hero.data('autoplayspeed'),
-      onInit: this.onInit,
-      onBeforeChange: this.beforeChange,
-      onAfterChange: this.afterChange
+      autoplay       : slickTheme.cache.$hero.data('autoplay'),
+      autoplaySpeed  : slickTheme.cache.$hero.data('autoplayspeed'),
+      onInit         : this.onInit,
+      onBeforeChange : this.beforeChange,
+      onAfterChange  : this.afterChange
     });
   };
 
-  checkFirstOnIndex = function() {
+  checkFirstOnIndex = function () {
     if (settings.$element.hasClass('hero--first')) {
       return true;
-    }
+    };
 
     return false;
   };
 
-  onInit = function(obj) {
+  onInit = function (obj) {
     $slider = obj.$slider;
     $allSlides = $slider.find('.' + slickTheme.vars.slideClass);
     $activeSlide = $slider.find('.' + slickTheme.vars.activeClass);
+    $slickDots = $slider.find('.slick-dots');
 
     if (!settings.isTouch) {
       $allSlides.addClass(slickTheme.vars.hiddenClass);
@@ -1787,7 +1636,7 @@ var slickTheme = (function(module, $) {
     }
   };
 
-  beforeChange = function(evt, currentSlide, nextSlide) {
+  beforeChange = function (evt, currentSlide, nextSlide) {
     if (!settings.isTouch) {
       $allSlides.removeClass(slickTheme.vars.hiddenClass);
     }
@@ -1801,72 +1650,63 @@ var slickTheme = (function(module, $) {
     }
   };
 
-  afterChange = function() {
-    if (settings.isTouch) {
-      return;
+  afterChange = function (evt, currentSlide) {
+    if (!settings.isTouch) {
+      $activeSlide = $slider.find('.' + slickTheme.vars.activeClass);
+      $allSlides.addClass(slickTheme.vars.hiddenClass);
+      $activeSlide.removeClass(slickTheme.vars.hiddenClass);
     }
-
-    $activeSlide = $slider.find('.' + slickTheme.vars.activeClass);
-    $allSlides.addClass(slickTheme.vars.hiddenClass);
-    $activeSlide.removeClass(slickTheme.vars.hiddenClass);
   };
 
-  setFullScreen = function() {
+  setFullScreen = function () {
     sizeFullScreen();
 
     // Resize hero after screen resize
-    slickTheme.cache.$window.resize(function() {
-      afterResize(
-        function() {
-          sizeFullScreen();
-        },
-        200,
-        'sizeFullScreen'
-      );
+    slickTheme.cache.$window.resize(function () {
+      afterResize(function() {
+        sizeFullScreen();
+      }, 200, 'sizeFullScreen');
     });
   };
 
-  sizeFullScreen = function() {
+  sizeFullScreen = function () {
     windowHeight = slickTheme.cache.$window.height();
     settings.$element.css('height', windowHeight);
   };
 
-  setParallax = function() {
+  setParallax = function () {
     $heroText = $('.hero__text-content');
     $heroImage = $('.hero__image');
 
-    slickTheme.cache.$window.on('scroll', function() {
+    slickTheme.cache.$window.on('scroll', function(evt) {
       calculateParallax(settings.fullscreen, currentActiveSlide);
     });
   };
 
-  calculateParallax = function(parallaxImage, currentSlide) {
+  calculateParallax = function (parallaxImage, currentSlide) {
     scrolled = slickTheme.cache.$window.scrollTop();
 
     $($heroText[currentSlide]).css({
-      transform: 'translate3d(0, ' + scrolled / 8 + 'px, 0)'
-    });
+      transform: 'translate3d(0, '+ scrolled / 8 +'px, 0)'
+    })
 
     if (parallaxImage) {
       $($heroImage[currentSlide]).css({
-        transform: 'translate3d(0, ' + scrolled / 8 + 'px, 0)'
-      });
+        transform: 'translate3d(0, '+ scrolled / 8 +'px, 0)'
+      })
     }
   };
 
-  fixIE8 = function() {
+  fixIE8 = function () {
     // Add an -ms- filter to make background-size: cover (mostly) work
     slickTheme.cache.$heroImage.each(function() {
       var $el = $(this),
-        img = $el.attr('data-image');
+          img = $el.attr('data-image');
 
       $el.css({
         'background-image': 'none',
-        filter:
-          'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' +
-          img +
-          '", sizingMethod="scale")'
-      });
+        'filter': 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' + img + '", sizingMethod="scale")'
+        });
     });
   };
 
@@ -1878,29 +1718,28 @@ var slickTheme = (function(module, $) {
   };
 
   return module;
-})(slickTheme || {}, jQuery);
 
+}(slickTheme || {}, jQuery));
 
 /* ================ Sections ================ */
 window.theme = window.theme || {};
 
 theme.DrawerMenuSection = (function() {
-  function DrawerMenuSection() {
+
+  function DrawerMenuSection(container) {
     timber.initCache();
 
     // close menu
-    $('#NavDrawer')
-      .find('.js-drawer-close')
-      .on('click', function(evt) {
-        evt.preventDefault();
-        timber.LeftDrawer.close();
-      });
+    $('#NavDrawer').find('.js-drawer-close').on('click', function(evt){
+      evt.preventDefault();
+      timber.LeftDrawer.close();
+    });
 
     var $toggleBtns = timber.cache.$mobileSubNavToggle;
 
     // Setup aria attributes
     $toggleBtns.attr('aria-expanded', 'false');
-    $toggleBtns.each(function(i, el) {
+    $toggleBtns.each(function (i, el) {
       var $el = $(el);
       $el.attr('aria-controls', $el.attr('data-aria-controls'));
     });
@@ -1919,28 +1758,24 @@ theme.DrawerMenuSection = (function() {
       }
 
       // Toggle class that expands/collapses sublist
-      $el
-        .closest('.mobile-nav__has-sublist')
-        .toggleClass('mobile-nav--expanded', toggleState);
+      $el.closest('.mobile-nav__has-sublist').toggleClass('mobile-nav--expanded', toggleState);
     });
   }
 
   return DrawerMenuSection;
 })();
 
-theme.DrawerMenuSection.prototype = _.assignIn(
-  {},
-  theme.DrawerMenuSection.prototype,
-  {
-    onSelect: function() {
-      timber.LeftDrawer.open();
-    },
+theme.DrawerMenuSection.prototype = _.assignIn({}, theme.DrawerMenuSection.prototype, {
 
-    onDeselect: function() {
-      timber.LeftDrawer.close();
-    }
+  onSelect: function() {
+    timber.LeftDrawer.open();
+  },
+
+  onDeselect: function() {
+    timber.LeftDrawer.close();
   }
-);
+
+});
 
 window.theme = window.theme || {};
 
@@ -1977,16 +1812,14 @@ theme.Product = (function() {
       productWrapper: '.product-single'
     };
 
-    var $container = (this.$container = $(container));
+    var $container = this.$container = $(container);
     var sectionId = $container.attr('data-section-id');
 
     if (!$('#ProductJson-' + sectionId).html()) {
       return;
     }
 
-    this.productSingleObject = JSON.parse(
-      document.getElementById('ProductJson-' + sectionId).innerHTML
-    );
+    this.productSingleObject = JSON.parse(document.getElementById('ProductJson-' + sectionId).innerHTML);
     this.zoomType = $container.data('image-zoom-type');
 
     this.initBreakpoints();
@@ -1998,7 +1831,7 @@ theme.Product = (function() {
       this.productImageZoom();
     }
 
-    if (theme.settings.cartType === 'drawer') {
+    if (theme.settings.cartType == 'drawer') {
       ajaxCart.init({
         formSelector: '#AddToCartForm--' + sectionId,
         cartContainer: '#CartContainer',
@@ -2010,32 +1843,22 @@ theme.Product = (function() {
 
     $window
       .on('load' + this.settings.namespace, theme.initStickyProductMeta)
-      .on(
-        'resize' + this.settings.namespace,
-        theme.debounce(this.initStickyProductMeta, 150).bind(this)
-      );
+      .on('resize' + this.settings.namespace, theme.debounce(this.initStickyProductMeta, 150).bind(this));
   }
 
   Product.prototype = _.assignIn({}, Product.prototype, {
     initProductVariant: function() {
       var options = {
         $container: this.$container,
-        enableHistoryState:
-          this.$container.data('enable-history-state') || false,
+        enableHistoryState: this.$container.data('enable-history-state') || false,
         singleOptionSelector: this.selectors.singleOptionSelector,
         originalSelectorId: this.selectors.originalSelectorId,
         product: this.productSingleObject
       };
 
       this.variants = new slate.Variants(options);
-      this.$container.on(
-        'variantChange' + this.settings.namespace,
-        this.productPage.bind(this)
-      );
-      this.$container.on(
-        'variantImageChange' + this.settings.namespace,
-        this.showVariantImage.bind(this)
-      );
+      this.$container.on('variantChange' + this.settings.namespace, this.productPage.bind(this));
+      this.$container.on('variantImageChange' + this.settings.namespace, this.showVariantImage.bind(this));
     },
 
     initBreakpoints: function() {
@@ -2074,23 +1897,14 @@ theme.Product = (function() {
     },
 
     resizeElements: function() {
-      $(
-        this.selectors.productGridImages,
-        this.$container
-      ).imagesLoaded(function() {
-        $(this.selectors.productGridImages, this.$container)
-          .css('height', 'auto')
-          .equalHeights();
+      $(this.selectors.productGridImages, this.$container).imagesLoaded(function() {
+        $(this.selectors.productGridImages, this.$container).css('height', 'auto').equalHeights();
       });
     },
 
     showVariantImage: function(evt) {
       var variant = evt.variant;
-      var $newImage = $(
-        '.product-single__photo[data-image-id="' +
-          variant.featured_image.id +
-          '"]'
-      );
+      var $newImage = $('.product-single__photo[data-image-id="' + variant.featured_image.id + '"]');
       var imageIndex;
 
       if (theme.variables.bpSmall) {
@@ -2104,9 +1918,7 @@ theme.Product = (function() {
         }
 
         if (imageIndex !== 0 || theme.variables.productPageLoad) {
-          $(this.selectors.productImages, this.$container).slickGoTo(
-            imageIndex
-          );
+          $(this.selectors.productImages, this.$container).slickGoTo(imageIndex);
         }
       } else {
         if (this.$container.data('scroll-to-image')) {
@@ -2115,18 +1927,13 @@ theme.Product = (function() {
           if (imageIndex !== 0 || theme.variables.productPageLoad) {
             if (theme.variables.productPageSticky) {
               // Scroll to variant image
-              $('html, body').animate(
-                {
-                  scrollTop: $newImage.offset().top
-                },
-                250
-              );
+              $('html, body').animate({
+                scrollTop: $newImage.offset().top
+              }, 250);
             } else {
               // Move selected variant image to top, preventing scrolling
               var currentScroll = $(document).scrollTop();
-              $newImage
-                .parent()
-                .prependTo($(this.selectors.productImages, this.$container));
+              $newImage.parent().prependTo($(this.selectors.productImages, this.$container));
               $(document).scrollTop(currentScroll);
             }
           }
@@ -2139,10 +1946,7 @@ theme.Product = (function() {
     },
 
     productImageZoom: function() {
-      if (
-        !$(this.selectors.productImagePhoto, this.$container).length ||
-        theme.variables.bpSmall
-      ) {
+      if (!$(this.selectors.productImagePhoto, this.$container).length || theme.variables.bpSmall) {
         return;
       }
 
@@ -2157,8 +1961,7 @@ theme.Product = (function() {
         gallery: {
           enabled: true,
           navigateByImgClick: false,
-          arrowMarkup:
-            '<button title="%title%" type="button" class="mfp-arrow mfp-arrow-%dir%"><span class="mfp-chevron mfp-chevron-%dir%"></span></button>',
+          arrowMarkup: '<button title="%title%" type="button" class="mfp-arrow mfp-arrow-%dir%"><span class="mfp-chevron mfp-chevron-%dir%"></span></button>',
           tPrev: theme.strings.zoomPrev,
           tNext: theme.strings.zoomNext
         }
@@ -2166,10 +1969,7 @@ theme.Product = (function() {
     },
 
     createImageCarousel: function() {
-      if (
-        !$(this.selectors.productImages, this.$container).length ||
-        $(this.selectors.productImagePhoto, this.$container).length < 2
-      ) {
+      if (!$(this.selectors.productImages, this.$container).length || $(this.selectors.productImagePhoto, this.$container).length < 2) {
         return;
       }
 
@@ -2197,20 +1997,8 @@ theme.Product = (function() {
         // Display variant image on featured product
         if (!$('body').hasClass('template-product')) {
           if (variant.featured_image) {
-            var $newImage = $(
-              this.selectors.productImageWrapper +
-                '[data-image-id="' +
-                variant.featured_image.id +
-                '"]',
-              this.$container
-            );
-            var $otherImages = $(
-              this.selectors.productImageWrapper +
-                ':not([data-image-id="' +
-                variant.featured_image.id +
-                '"])',
-              this.$container
-            );
+            var $newImage = $(this.selectors.productImageWrapper + '[data-image-id="' + variant.featured_image.id + '"]', this.$container);
+            var $otherImages = $(this.selectors.productImageWrapper + ':not([data-image-id="' + variant.featured_image.id + '"])', this.$container);
 
             $newImage.removeClass('hide');
             $otherImages.addClass('hide');
@@ -2220,76 +2008,47 @@ theme.Product = (function() {
         // Select a valid variant if available
         if (variant.available) {
           // Available, enable the submit button, change text, show quantity elements
-          $(this.selectors.addToCart, this.$container)
-            .removeClass('disabled')
-            .prop('disabled', false);
-          $(this.selectors.addToCartText, this.$container).html(
-            translations.addToCart
-          );
+          $(this.selectors.addToCart, this.$container).removeClass('disabled').prop('disabled', false);
+          $(this.selectors.addToCartText, this.$container).html(translations.addToCart);
           $(this.selectors.quantityElements, this.$container).show();
 
           // Update the full details link
           var $link = $(this.selectors.productFullDetails, this.$container);
           if ($link.length) {
-            $link.attr(
-              'href',
-              this.updateUrlParameter($link.attr('href'), 'variant', variant.id)
-            );
+            $link.attr('href', this.updateUrlParameter($link.attr('href'), 'variant', variant.id));
           }
         } else {
           // Sold out, disable the submit button, change text, hide quantity elements
-          $(this.selectors.addToCart, this.$container)
-            .addClass('disabled')
-            .prop('disabled', true);
-          $(this.selectors.addToCartText, this.$container).html(
-            translations.soldOut
-          );
+          $(this.selectors.addToCart, this.$container).addClass('disabled').prop('disabled', true);
+          $(this.selectors.addToCartText, this.$container).html(translations.soldOut);
           $(this.selectors.quantityElements, this.$container).hide();
         }
 
-        $(this.selectors.productPrice, this.$container)
-          .html(theme.Currency.formatMoney(variant.price, moneyFormat))
-          .show();
+        $(this.selectors.productPrice, this.$container).html(theme.Currency.formatMoney(variant.price, moneyFormat)).show();
 
         // Also update and show the product's compare price if necessary
         if (variant.compare_at_price > variant.price) {
-          $(this.selectors.comparePrice, this.$container).html(
-            theme.Currency.formatMoney(variant.compare_at_price, moneyFormat)
-          );
+          $(this.selectors.comparePrice, this.$container).html(theme.Currency.formatMoney(variant.compare_at_price, moneyFormat));
           $(this.selectors.priceWrapper, this.$container).show();
           $(this.selectors.productPrice, this.$container).addClass('on-sale');
-          $(this.selectors.comparePriceA11y, this.$container).attr(
-            'aria-hidden',
-            'false'
-          );
-          $(this.selectors.priceA11y, this.$container).attr(
-            'aria-hidden',
-            'false'
-          );
+          $(this.selectors.comparePriceA11y, this.$container).attr('aria-hidden', 'false');
+          $(this.selectors.priceA11y, this.$container).attr('aria-hidden', 'false');
         } else {
           $(this.selectors.priceWrapper, this.$container).hide();
-          $(this.selectors.productPrice, this.$container).removeClass(
-            'on-sale'
-          );
-          $(this.selectors.comparePriceA11y, this.$container).attr(
-            'aria-hidden',
-            'true'
-          );
+          $(this.selectors.productPrice, this.$container).removeClass('on-sale');
+          $(this.selectors.comparePriceA11y, this.$container).attr('aria-hidden', 'true');
         }
 
         // Also Show SKU
         $(this.selectors.SKU).html(variant.sku);
+
       } else {
         // The variant doesn't exist, disable submit button.
         // This may be an error or notice that a specific variant is not available.
         // To only show available variants, implement linked product options:
         //   - http://docs.shopify.com/manual/configuration/store-customization/advanced-navigation/linked-product-options
-        $(this.selectors.addToCart, this.$container)
-          .addClass('disabled')
-          .prop('disabled', true);
-        $(this.selectors.addToCartText, this.$container).html(
-          translations.unavailable
-        );
+        $(this.selectors.addToCart, this.$container).addClass('disabled').prop('disabled', true);
+        $(this.selectors.addToCartText, this.$container).html(translations.unavailable);
         $(this.selectors.quantityElements, this.$container).hide();
       }
     },
@@ -2314,10 +2073,7 @@ theme.Product = (function() {
         return;
       }
 
-      if (
-        !$meta.length ||
-        $(this.selectors.productImagePhoto, this.$container).length < 2
-      ) {
+      if (!$meta.length || $(this.selectors.productImagePhoto, this.$container).length < 2) {
         return;
       }
 
@@ -2335,10 +2091,7 @@ theme.Product = (function() {
       }
 
       var productCopyHeight = $meta.outerHeight();
-      var productImagesHeight = $(
-        this.selectors.productImages,
-        this.$container
-      ).height();
+      var productImagesHeight = $(this.selectors.productImages, this.$container).height();
 
       /*============================================================================
         Calculate when to detach fixed element to avoid content overlap.
@@ -2348,10 +2101,7 @@ theme.Product = (function() {
       calcLimit -= productCopyHeight;
 
       // Init sticky if desc shorter than images and fits in viewport
-      if (
-        productCopyHeight < productImagesHeight &&
-        productCopyHeight < $(window).height()
-      ) {
+      if (productCopyHeight < productImagesHeight && productCopyHeight < $(window).height()) {
         theme.variables.productPageSticky = true;
         $meta.scrollToFixed({
           limit: calcLimit
@@ -2378,14 +2128,10 @@ theme.Collection = (function() {
       productGridImages: '.grid-uniform .grid-product__image-wrapper',
       $productGridRows: $('.collage-grid__row'),
       productGridPhotosLarge: '.grid__item--large .grid-product__image-link',
-      $collectionImage: $('.collection-hero__image'),
-      filterDropdowns: '.filter-dropdown',
-      filterSelect: '.filter-dropdown__select',
-      filterLabel: '.filter-dropdown__label',
-      sortDropdown: '#sortBy'
+      $collectionImage: $('.collection-hero__image')
     };
 
-    var $container = (this.$container = $(container));
+    var $container = this.$container = $(container);
     this.gridType = $container.data('grid-type');
 
     this.selectors.$collectionImage.addClass('is-init');
@@ -2395,197 +2141,99 @@ theme.Collection = (function() {
       return;
     }
 
-    theme.cache.$window.on('scroll', function() {
+    theme.cache.$window.on('scroll', function(evt) {
       var scrolled = theme.cache.$window.scrollTop();
       theme.cache.$collectionImage.css({
-        transform: 'translate3d(0, ' + scrolled / 4.5 + 'px, 0)'
-      });
+        'transform': 'translate3d(0, ' + scrolled / 4.5 + 'px, 0)'
+      })
     });
 
     this.init();
   }
 
   Collection.prototype = _.assignIn({}, Collection.prototype, {
-    init: function() {
+    init: function(){
       this.cacheSelectors();
-      this.setQueryParams();
-
-      this.cache.$sortDropdown.on('change', this.sortCollection.bind(this));
 
       if (this.gridType === 'collage') {
         this.initCollageGrid();
       } else if (this.gridType === 'grid') {
         this.equalHeights();
       }
+
     },
 
-    updateFilterLabel: function(evt, element) {
-      var $select = evt ? $(evt.target) : $(element);
-      var $label = $select
-        .prev('.filter-dropdown__label')
-        .find('.filter-dropdown__label--active');
-      var selectedVariant = $select.find('option:selected').text();
-
-      $label.html(' ' + selectedVariant);
-      this.cache.$filterDropdowns.addClass('loaded');
-    },
-
-    cacheSelectors: function() {
-      this.cache = {
-        $html: $('html'),
+    cacheSelectors: function(){
+      cache = {
         $window: $(window),
         $productGridImages: $(this.selectors.productGridImages),
         $productGridRows: $(this.selectors.productGridRows),
-        $productGridPhotosLarge: $(this.selectors.productGridPhotosLarge),
-        $filterDropdowns: $(this.selectors.filterDropdowns),
-        $filterSelect: $(this.selectors.filterSelect),
-        $filterLabel: $(this.selectors.filterLabel),
-        $sortDropdown: $(this.selectors.sortDropdown)
-      };
+        $productGridPhotosLarge: $(this.selectors.productGridPhotosLarge)
+      }
     },
 
     equalHeights: function() {
-      var self = this;
-      theme.cache.$window.on('load', resizeElements());
+      cache.$window.on('load', resizeElements());
 
-      theme.cache.$window.on(
-        'resize',
-        afterResize(
-          function() {
-            resizeElements();
-          },
-          250,
-          'equal-heights'
-        )
+      cache.$window.on('resize',
+        afterResize(function() {
+          resizeElements();
+        }, 250, 'equal-heights')
       );
 
       function resizeElements() {
-        self.cache.$productGridImages.css('height', 'auto').equalHeights();
+        cache.$productGridImages.css('height', 'auto').equalHeights();
       }
     },
 
-    setQueryParams: function() {
-      //don't execute if sort dropdown is not present.
-      if (!this.cache.$sortDropdown.length) {
+    initCollageGrid: function () {
+      if (!cache.$productGridRows.length) {
         return;
-      }
-
-      Shopify.queryParams = this.parseQueryString();
-
-      var sortDropdownValue =
-        Shopify.queryParams.sort_by ||
-        this.cache.$sortDropdown
-          .find('option')
-          .first()
-          .val();
-
-      this.cache.$sortDropdown.val(sortDropdownValue);
-    },
-
-    parseQueryString: function() {
-      if (!location.search.length) {
-        return {};
-      }
-
-      var params = {};
-
-      for (
-        var aKeyValue, i = 0, aCouples = location.search.substr(1).split('&');
-        i < aCouples.length;
-        i++
-      ) {
-        aKeyValue = aCouples[i].split('=');
-        if (aKeyValue.length > 1) {
-          params[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(
-            aKeyValue[1]
-          );
-        }
-      }
-      return params;
-    },
-
-    initCollageGrid: function() {
-      if (!this.cache.$productGridRows.length) {
-        return;
-      }
+      };
 
       this.collageGridHeights();
 
-      theme.cache.$window.on(
-        'resize',
-        theme.debounce(this.collageGridHeights, 500)
-      );
+      cache.$window.on('resize', theme.debounce(this.collageGridHeights, 500));
     },
 
-    collageGridHeights: function() {
-      if (theme.variables.bpSmall || !this.cache.$productGridRows.length) {
+    collageGridHeights: function () {
+      if (theme.variables.bpSmall || !cache.$productGridRows.length) {
         return;
       }
 
       // calculate image heights for each row of grid images
-      for (var i = this.cache.$productGridRows.length - 1; i >= 0; i--) {
-        var $currentRow = $(this.cache.$productGridRows[i]);
-        var $smallImages = $currentRow.find(
-          '.grid__item--small .grid-product__image-wrapper'
-        );
-        var $largeImageWrapper = $currentRow.find(
-          '.grid__item--large .grid-product__image-wrapper'
-        );
+      for (var i = cache.$productGridRows.length - 1; i >= 0; i--) {
+        var $currentRow = $(cache.$productGridRows[i]);
+        var $smallImages = $currentRow.find('.grid__item--small .grid-product__image-wrapper');
+        var $largeImageWrapper = $currentRow.find('.grid__item--large .grid-product__image-wrapper');
         var $largeImage = $largeImageWrapper.find('.grid-product__image-link');
 
         // calculate the bottom edge of the small image
-        var smallImageOffset =
-          $smallImages[1].offsetTop + $smallImages[1].offsetHeight;
+        var smallImageOffset = $smallImages[1].offsetTop + $smallImages[1].offsetHeight;
 
         // calculate the bottom edge of the large image for the row
-        var largeImageOffset =
-          $largeImageWrapper[0].offsetTop + $largeImageWrapper[0].offsetHeight;
-
-        var largeImageHeight = 0;
+        var largeImageOffset = $largeImageWrapper[0].offsetTop + $largeImageWrapper[0].offsetHeight;
 
         // Depending on which image is lower, increase or decrease the large
         // image size
         if (smallImageOffset > largeImageOffset) {
-          largeImageHeight =
-            $largeImage.height() + (smallImageOffset - largeImageOffset);
+          var largeImageHeight = $largeImage.height() + (smallImageOffset - largeImageOffset);
         } else {
-          largeImageHeight =
-            $largeImage.height() - (largeImageOffset - smallImageOffset);
-        }
+          var largeImageHeight = $largeImage.height() - (largeImageOffset - smallImageOffset);
+        };
 
         $largeImage.css('height', largeImageHeight);
-      }
+      };
     },
 
-    clearCollageGridHeights: function() {
-      if (!this.cache.$productGridRows.length) {
+    clearCollageGridHeights: function () {
+      if (!cache.$productGridRows.length) {
         return;
-      }
+      };
 
-      this.cache.$productGridPhotosLarge.removeAttr('style');
-    },
-
-    collectionSorting: function() {
-      if (!this.cache.$tagList.length) {
-        return;
-      }
-
-      this.cache.$tagList.on('change', function() {
-        window.location.href = $(this).val();
-      });
-    },
-
-    sortCollection: function() {
-      if (!this.cache.$sortDropdown.length) {
-        return;
-      }
-
-      if (Shopify.queryParams.page) {
-        delete Shopify.queryParams.page;
-      }
-      Shopify.queryParams.sort_by = this.cache.$sortDropdown.val();
-      location.search = jQuery.param(Shopify.queryParams);
+      cache.$productGridPhotosLarge.removeAttr('style');
     }
+
   });
 
   return Collection;
@@ -2594,6 +2242,7 @@ theme.Collection = (function() {
 window.theme = window.theme || {};
 
 theme.HeaderSection = (function() {
+
   function Header(container) {
     timber.drawersInit();
     theme.initCache();
@@ -2601,15 +2250,13 @@ theme.HeaderSection = (function() {
     theme.resizeLogo();
     theme.searchModal();
 
-    var $container = (this.$container = $(container));
+    var $container = this.$container = $(container);
+    var sectionId = $container.attr('data-section-id');
 
     this.template = $container.attr('data-template');
 
     // ajaxCart.init will run from Product.prototype when on the product page
-    if (
-      theme.settings.cartType === 'drawer' &&
-      this.template.indexOf('product') === -1
-    ) {
+    if (theme.settings.cartType == 'drawer' && this.template.indexOf('product') == -1) {
       ajaxCart.init({
         formSelector: '.add-to-cart__form',
         cartContainer: '#CartContainer',
@@ -2631,11 +2278,13 @@ theme.HeaderSection = (function() {
   }
 
   return Header;
+
 })();
 
 window.theme = window.theme || {};
 
 theme.FeaturedContentSection = (function() {
+
   function FeaturedContent() {
     theme.styleTextLinks();
   }
@@ -2644,19 +2293,23 @@ theme.FeaturedContentSection = (function() {
 })();
 
 theme.SlideshowSection = (function() {
-  function SlideshowSection() {
+
+  function SlideshowSection(container) {
+
     theme.initCache();
 
-    var slideshow = (this.slideshow = '#Hero');
+    var $container = this.$container = $(container);
+    var sectionId = $container.attr('data-section-id');
+    var slideshow = this.slideshow = '#Hero';
     //var autoplay = $(this.slideshow).attr('data-autoplay');
     //var autoplay = $(this.slideshow).attr('data-autoplayspeed');
 
     slickTheme.init({
-      $element: $(slideshow),
-      fullscreen: $(slideshow).data('fullscreen'),
-      parallax: $(slideshow).data('parallax'),
-      autoplay: $(slideshow).data('autoplay'),
-      autoplaySpeed: $(slideshow).data('autoplayspeed')
+      $element     : $(slideshow),
+      fullscreen   : $(slideshow).data('fullscreen'),
+      parallax     : $(slideshow).data('parallax'),
+      autoplay       : $(slideshow).data('autoplay'),
+      autoplaySpeed  : $(slideshow).data('autoplayspeed')
     });
 
     // remove header absolute display if slideshow is empty
@@ -2668,41 +2321,40 @@ theme.SlideshowSection = (function() {
   return SlideshowSection;
 })();
 
-theme.SlideshowSection.prototype = _.assignIn(
-  {},
-  theme.SlideshowSection.prototype,
-  {
-    onUnload: function() {
-      $(this.slideshow).unslick();
-    },
+theme.SlideshowSection.prototype = _.assignIn({}, theme.SlideshowSection.prototype, {
 
-    onSelect: function() {
-      $(this.slideshow).slickPause();
-    },
+  onUnload: function() {
+    $(this.slideshow).unslick();
+  },
 
-    onDeselect: function() {
-      $(this.slideshow).slickPlay();
-    },
+  onSelect: function() {
+    $(this.slideshow).slickPause();
+  },
 
-    onBlockSelect: function(evt) {
-      // Ignore the cloned version
-      var $slide = $('.slide--' + evt.detail.blockId);
-      var slideIndex = $slide.attr('index');
+  onDeselect: function() {
+    $(this.slideshow).slickPlay();
+  },
 
-      // Go to selected slide, pause autoplay
-      $(this.slideshow)
-        .slickGoTo(slideIndex)
-        .slickPause();
-    },
+  onBlockSelect: function(evt) {
+    // Ignore the cloned version
+    var $slide = $('.slide--' + evt.detail.blockId);
+    var slideIndex = $slide.attr('index');
 
-    onBlockDeselect: function() {
-      // Resume autoplay
-      $(this.slideshow).slickPlay();
-    }
+    // Go to selected slide, pause autoplay
+    $(this.slideshow).slickGoTo(slideIndex).slickPause();
+  },
+
+  onBlockDeselect: function() {
+    // Resume autoplay
+    $(this.slideshow).slickPlay();
   }
-);
+});
 
 window.theme = window.theme || {};
+
+theme.settings = {
+  cartType: {{ settings.cart_type | json }},
+};
 
 theme.PasswordHeader = (function() {
   function PasswordHeader() {
@@ -2717,22 +2369,18 @@ theme.PasswordHeader = (function() {
         closeOnBgClick: false,
         closeBtnInside: false,
         closeOnContentClick: false,
-        tClose: password.strings.pageClose,
+        tClose: {{ 'products.zoom.close' | t | json }},
         removalDelay: 500,
         callbacks: {
           open: function() {
-            window.setTimeout(function() {
-              document.getElementById('password').focus();
-            }, 50);
+            window.setTimeout( function() { document.getElementById('password').focus(); }, 50 );
           },
           close: function() {
-            window.setTimeout(function() {
-              document.getElementById('email').focus();
-            }, 50);
+            window.setTimeout( function() { document.getElementById('email').focus(); }, 50 );
           }
         }
       });
-      if ($('.storefront-password-form .errors').size()) {
+      if ( $('.storefront-password-form .errors').size() ) {
         $('.js-toggle-login-modal').click();
       }
     }
@@ -2770,20 +2418,12 @@ theme.Maps = (function() {
   // Show an auto error message on all map instances.
   // eslint-disable-next-line camelcase, no-unused-vars
   window.gm_authFailure = function() {
-    if (!Shopify.designMode) return;
-
     if (Shopify.designMode) {
       $(selectors.section).addClass(classes.mapError);
       $(selectors.map).remove();
-      $(selectors.mapOverlay).after(
-        '<div class="' +
-          classes.errorMsg +
-          '">' +
-          theme.strings.authError +
-          '</div>'
-      );
+      $(selectors.mapOverlay).after('<div class="' + classes.errorMsg + '">' + theme.strings.authError + '</div>');
     }
-  };
+  }
 
   function Map(container) {
     this.$container = $(container);
@@ -2799,14 +2439,14 @@ theme.Maps = (function() {
 
       // Check if the script has previously been loaded with this key
       var $script = $('script[src*="' + this.key + '&"]');
-      if ($script.length === 0) {
-        $.getScript(
-          'https://maps.googleapis.com/maps/api/js?key=' + this.key
-        ).then(function() {
-          apiStatus = 'loaded';
-          self.createMap();
+      if ($script.length == 0) {
+        $.getScript('https://maps.googleapis.com/maps/api/js?key=' + this.key)
+          .then(function() {
+            apiStatus = 'loaded';
+            self.createMap();
         });
-      } else {
+      }
+      else {
         this.createMap();
       }
     } else {
@@ -2815,15 +2455,15 @@ theme.Maps = (function() {
       if (apiStatus !== 'loading') {
         apiStatus = 'loading';
         if (typeof window.google === 'undefined') {
-          $.getScript(
-            'https://maps.googleapis.com/maps/api/js?key=' + this.key
-          ).then(function() {
-            apiStatus = 'loaded';
-            initAllMaps();
-          });
+          $.getScript('https://maps.googleapis.com/maps/api/js?key=' + this.key)
+            .then(function() {
+              apiStatus = 'loaded';
+              initAllMaps();
+            });
         }
       }
     }
+
   }
 
   function initAllMaps() {
@@ -2838,7 +2478,7 @@ theme.Maps = (function() {
     var geocoder = new google.maps.Geocoder();
     var address = $map.data('address-setting');
 
-    geocoder.geocode({ address: address }, function(results, status) {
+    geocoder.geocode({address: address}, function(results, status) {
       if (status !== google.maps.GeocoderStatus.OK) {
         deferred.reject(status);
       }
@@ -2854,34 +2494,32 @@ theme.Maps = (function() {
       var $map = this.$map;
 
       return geolocate($map)
-        .then(
-          function(results) {
-            var mapOptions = {
-              zoom: config.zoom,
-              center: results[0].geometry.location,
-              draggable: false,
-              clickableIcons: false,
-              scrollwheel: false,
-              disableDoubleClickZoom: true,
-              disableDefaultUI: true
-            };
+        .then(function(results) {
+          var mapOptions = {
+            zoom: config.zoom,
+            center: results[0].geometry.location,
+            draggable: false,
+            clickableIcons: false,
+            scrollwheel: false,
+            disableDoubleClickZoom: true,
+            disableDefaultUI: true
+          };
 
-            var map = (this.map = new google.maps.Map($map[0], mapOptions));
-            var center = (this.center = map.getCenter());
+          var map = this.map = new google.maps.Map($map[0], mapOptions);
+          var center = this.center = map.getCenter();
 
-            //eslint-disable-next-line no-unused-vars
-            var marker = new google.maps.Marker({
-              map: map,
-              position: map.getCenter()
-            });
+          //eslint-disable-next-line no-unused-vars
+          var marker = new google.maps.Marker({
+            map: map,
+            position: map.getCenter()
+          });
 
-            google.maps.event.addDomListener(window, 'resize', function() {
-              google.maps.event.trigger(map, 'resize');
-              map.setCenter(center);
-              $map.removeAttr('style');
-            });
-          }.bind(this)
-        )
+          google.maps.event.addDomListener(window, 'resize', function() {
+            google.maps.event.trigger(map, 'resize');
+            map.setCenter(center);
+            $map.removeAttr('style');
+          });
+        }.bind(this))
         .fail(function() {
           var errorMessage;
 
@@ -2905,13 +2543,7 @@ theme.Maps = (function() {
             $map
               .parent()
               .addClass(classes.mapError)
-              .html(
-                '<div class="' +
-                  classes.errorMsg +
-                  '">' +
-                  errorMessage +
-                  '</div>'
-              );
+              .html('<div class="' + classes.errorMsg + '">' + errorMessage + '</div>');
           }
         });
     },
@@ -2953,9 +2585,7 @@ theme.initCache = function() {
     $collectionImage        : $('.collection-hero__image'),
 
     $siteNav                : $('.site-nav'),
-    $siteNavOpen            : $('.site-nav--open'),
     $cartBuggle             : $('.cart-link__bubble'),
-    $logoWrapper            : $('.site-header__logo'),
     $logo                   : $('.site-header__logo img'),
     $toggleSearchModal      : $('.js-toggle-search-modal'),
 
@@ -3043,29 +2673,23 @@ theme.fitNav = function() {
 
   function controlNav() {
     // Subtract 20 from width to account for inline-block spacing
-    var navWidth = theme.cache.$siteNav.parent().outerWidth() + 200;
+    var navWidth = theme.cache.$siteNav.parent().outerWidth() - 20;
     var navItemWidth = 0;
     theme.cache.$siteNav.find('> li').each(function() {
       var $el = $(this);
-      // Round up to be safe
-      navItemWidth += Math.ceil($(this).width());
+      if (!$el.hasClass('site-nav--compress__menu')) {
+        // Round up to be safe
+        navItemWidth += Math.ceil($(this).width());
+      }
     });
 
     if (navItemWidth > navWidth) {
       theme.cache.$siteNav.addClass('site-nav--compress');
-      theme.cache.$siteNav.parent().removeClass('large--two-thirds').addClass('large--one-sixth');
-      theme.cache.$siteNavOpen.addClass('site-nav--open__display');
-      theme.cache.$siteNavOpen.parent().removeClass('large--hide');
-      theme.cache.$logoWrapper.parent().removeClass('large--one-third').addClass('large--two-thirds');
-      theme.cache.$logoWrapper.removeClass('large--left').addClass('text-center');
     } else {
       theme.cache.$siteNav.removeClass('site-nav--compress');
-      theme.cache.$siteNavOpen.removeClass('site-nav--open__display');
-      theme.cache.$siteNavOpen.parent().addClass('large--hide');
     }
 
     theme.cache.$siteNav.addClass('site-nav--init');
-    theme.cache.$siteNavOpen.addClass('site-nav--init');
   }
 };
 

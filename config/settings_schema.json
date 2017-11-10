@@ -124,6 +124,11 @@
         "id": "type_header_family",
         "label": "Font",
         "options": [
+        {
+            "value": "'PT Mono', monospace",
+            "label": "PT Mono",
+            "group": "MIM Spcific font"
+          },
           {
             "value": "'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, 'AppleGothic', sans-serif",
             "label": "Avant Garde",
@@ -621,7 +626,7 @@
          {
             "value": "'PT Mono', monospace",
             "label": "PT Mono",
-            "group": "My added fonts"
+            "group": "MIM Specific fonts"
           },
           {
             "value": "'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, 'AppleGothic', sans-serif",

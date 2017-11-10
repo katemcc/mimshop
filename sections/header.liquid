@@ -117,13 +117,7 @@
                   {% include 'search-bar', search_btn_style: 'btn', search_bar_location: 'search-bar--header' %}
                 </li>
                 {% endif %}
-
-                <li class="site-nav__item site-nav--compress__menu">
-                  <button type="button" class="icon-fallback-text site-nav__link site-nav__link--icon js-drawer-open-left" aria-controls="NavDrawer">
-                    <span class="icon icon-hamburger" aria-hidden="true"></span>
-                    <span class="fallback-text">{{ 'general.drawers.navigation' | t }}</span>
-                  </button>
-                </li>
+         
                 {% for link in linklists[section.settings.main_menu_link_list].links %}
                   {% comment %}
                     Create a dropdown menu by naming a linklist the same as a link in the parent nav

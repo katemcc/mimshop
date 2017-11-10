@@ -1,9 +1,34 @@
 /* MIM Specific Styles*/
+a:link {
+    color: #493B1B;
+}
+.site-header a:link {
+    color: #ffffff;
+}
+a:hover {
+    color: #AFA07D;
+}
+a:active {
+    color: #AFA07D;
+}
+.btn a:link {
+    color: #E4E0DF;
+}
+.collection-menu-link:active {
+        color: #AFA07D;
+}
+h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+    font-family: "PT Mono", monospace;
+    line-height: 1.2;
+}
 #PageContainer {
-    background-color: #E4E0DF;
+    background-color: #f0f0f0;
 }
 #shopify-section-header {
     margin-bottom: 20px;
+}
+.template-index #shopify-section-header, .template-blog #shopify-section-header {
+    margin-bottom: 0;
 }
 .template-collection .header-wrapper, .template-cart .header-wrapper, .template-page .header-wrapper, .template-blog .header-wrapper {
     color: #E4E0DF;
@@ -12,7 +37,7 @@
 .template-collection a.site-nav__link, .template-cart a.site-nav__link, .template-page a.site-nav__link, .template-blog a.site-nav__link {
     color: #E4E0DF;
 }
-.main-content { padding-top: 0px; padding-bottom: 0; line-height: 1; background-color: ##E4E0DF;}
+.main-content { padding-top: 0px; padding-bottom: 0; line-height: 1; }
 .slick-slider {
     margin-bottom: 0px;
 }
@@ -21,6 +46,16 @@
 }
 .feature-row__item h2 {
   font-family: "PT Mono",monospace;
+}
+.template-index .feature-row__text--right {
+    padding: 0 55px;
+}
+.template-index .feature-row__text--left {
+    padding: 0 55px;
+}
+#shopify-section-featured-collections {
+   margin: 25px 25px 120px;
+   background-color: #F0F0F0;
 }
 /*#shopify-section-1509034657124 {
   background-color: {{ settings.color_front_section }};
@@ -42,26 +77,44 @@
  #shopify-section-1509547082962 h2.h3 {
     color: #e9d7cc;
   }
+#shopify-section-featured-logos {
+    margin: 30px;
+    padding: 30px 0;
+}
+#shopify-section-featured-logos img {
+         height: 100px;  
+        vertical-align: bottom;
+        display: table-cell; 
+}
+.template-page .feature-row__image {
+    width: 60%;
+    margin: 10% 1% 10% 30%;
+    text-align: right;
+}
+#shopify-section-1510236454229 {
+    margin: 30px;
+}
+#shopify-section-1510236454229 img {
+        vertical-align: bottom;
+        display: table-cell; 
+        text-align: center;
+}
 
 .wrapper {
-    max-width: 1550px;
+    max-width: 1250px;
     margin: 0 auto;
     padding: 0 ;
 }
-.feature-row__text--right {
+.template-index .feature-row__text--right {
     padding-right: 55px;
     line-height: 1.6em;
-    margin-top: 8em;
     font-size: 1.2em;
-
 }
-.feature-row__text--left {
+.template-index .feature-row__text--left {
     padding-left: 55px;
     line-height: 1.6em;
-    margin-top: 8em;
+    margin-top: 6em;
     font-size: 1.2em;
-
-
 }
 #products .main-content {
   color: #12130f;
@@ -98,12 +151,7 @@ sup {
 .site-header h2 {
     display: none;
 }
-.feature-row__text--right {
-    padding: 0 55px;
-}
-.feature-row__text--left {
-    padding: 0 55px;
-}
+
 .slick-slide .slideshow__logo  img {
     margin: 0 auto;
     display:inline;
@@ -116,15 +164,14 @@ footer {
 .site-footer a {
    color: #E4E0DF;
 }
-#shopify-section-featured-collections {
-   margin: 120px 25px;
-   background-color: #E4E0DF;
-}
+
 .hr--large {
     display: none;
 }
+/* See Collection Titles under Images Front Page */
 .collection-collage__item {
     overflow: visible;
+    margin-bottom: 79px;
 }
 .collection-grid__item-title--wrapper {
     display: block;
@@ -193,5 +240,36 @@ site-header__logo img {
 .burger-icon--top {
     top: 27px;
 }
-
-
+input, textarea {
+    font-style: normal;
+    font-family: "PT+Mono", monospace;
+    font-weight: 700;
+}
+/*  Sizes panel on product page */
+.single-option-radio {
+    background-color: #E4E0DF;
+}
+h1:not(.hero__title) {
+    display: none;
+}
+#news-page {
+    background-image: url("https://cdn.shopify.com/s/files/1/2523/5404/files/Naadam_rider_lg.jpg?8176722000897357006");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#shopify-section-slideshow {
+    margin-bottom: -100px;
+}
+/* Box on news items */
+.box-news {
+    padding: 20px 10px 10px 20px;
+    border: 3px solid #12130F;
+    margin: 30px;
+ 
+}
+grid {
+    float: left;
+}
+#news-page {
+    height: 850px;
+}
