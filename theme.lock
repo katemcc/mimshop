@@ -32,7 +32,7 @@ assets/respond-proxy.html:
 assets/respond.min.js:
   development: 2017-11-07T05:07:26-05:00   a2684e9b8fa50d6d11c56a9ada068528
 assets/theme.css.liquid:
-  development: 2017-11-10T13:19:31-05:00   fc091ec77c2a1eedbb51223f110a4c95
+  development: 2017-11-13T05:10:47-05:00   ac894d1f08d5661e8af1ca9bb9141688
 assets/theme.js.liquid:
   development: 2017-11-10T04:44:33-05:00   cf9e618dfc554d6b639a60d6919ec60a
 assets/theme.scss.liquid:
@@ -86,7 +86,7 @@ sections/featured-product.liquid:
 sections/featured-products.liquid:
   development: 2017-11-07T05:07:24-05:00   9fec56b1671133e9f6a01dec0b062ede
 sections/featured-row.liquid:
-  development: 2017-11-07T05:07:24-05:00   fb9a3596588cd8472aeb370d2ecef85f
+  development: 2017-11-12T17:22:51-05:00   0219cf63f42fa617be790521c8c75afc
 sections/featured-video.liquid:
   development: 2017-11-07T05:07:24-05:00   27c4bd55d80c6e12b2608e5c42d59bd0
 sections/footer.liquid:
