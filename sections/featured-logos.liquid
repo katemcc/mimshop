@@ -1,12 +1,29 @@
 <div class="wrapper">
-  <div class="page-width feature-row">
+  <div class="page-width featured-logos">
+      <div class="grid collection-grid">
+          <div class="grid__item small--hide medium--one-fifth large--one-fifth collection-college__item text-center">
+            
+          </div>
+          <div class="grid__item one-whole medium--one-fifth large--one-fifth collection-college__item text-center">
+             <img src="https://cdn.shopify.com/s/files/1/2523/5404/files/Dalai-Lama-sepia.png?15504576989298976747">
+          </div>
+          <div class="grid__item one-whole medium--one-fifth large--one-fifth collection-college__item text-center">
+              <img src="https://cdn.shopify.com/s/files/1/2523/5404/files/irish-aid-sepia.png?15504576989298976747">
+          </div>
+          <div class="grid__item one-whole medium--one-fifth large--one-fifth collection-college__item text-center">
+              <img src="https://cdn.shopify.com/s/files/1/2523/5404/files/jampa-ling-sepia.png?15504576989298976747">
+          </div>
+           <div class="grid__item small--hide medium--one-fifth large--one-fifth collection-college__item text-center">
+            
+          </div>
+      </div>
     {% capture image_layout %}
       <div class="feature-row__item">
         {% if section.settings.image != blank %}
           <noscript>
             {{ section.settings.image | img_url: '600x600' | img_tag: section.settings.image.alt, 'feature-row__image-no-js' }}
           </noscript>
-          <div class="feature-row__image-wrapper" style="padding-top:{{ 1 | divided_by: section.settings.image.aspect_ratio | times: 50}}%;">
+          <div class="feature-row__image-wrapper" style="padding-top:{{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100}}%;">
             {% assign img_url = section.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
             <img class="feature-row__image lazyload"
               src="{{ section.settings.image | img_url: '300x300' }}"
@@ -22,29 +39,7 @@
       </div>
     {% endcapture %}
 
-    <div class="feature-row">
-      {% if section.settings.layout == 'left' %}
-        {{ image_layout }}
-      {% endif %}
-
-      <div class="feature-row__item feature-row__text feature-row__text--{{ section.settings.layout }}">
-        {% if section.settings.title != blank %}
-          <h2 class="h3">{{ section.settings.title | escape }}</h2>
-        {% endif %}
-        {% if section.settings.text != blank %}
-          <div class="rte-setting featured-row__subtext">{{ section.settings.text }}</div>
-        {% endif %}
-        {% if section.settings.button_label != blank and section.settings.button_link != blank %}
-          <a href="{{ section.settings.button_link }}" class="btn">
-            {{ section.settings.button_label | escape }}
-          </a>
-        {% endif %}
-      </div>
-
-      {% if section.settings.layout == 'right' %}
-        {{ image_layout }}
-      {% endif %}
-    </div>
+   
   </div>
 </div>
 

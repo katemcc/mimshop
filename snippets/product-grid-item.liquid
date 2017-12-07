@@ -95,10 +95,16 @@
             {{ product.price | money_without_trailing_zeros }}
           {% endif %}
         </span>
-      </span>
-      {% if section.settings.product_vendor_enable %}
+         
+          {% if section.settings.product_vendor_enable %}
         <p class="grid-product__vendor">{{ product.vendor }}</p>
       {% endif %}
     </a>
-  </div>
+        <a href="{{ product.url | within: collection }}">
+ <button class="btn product-detail">More Info</button></a>
+      <form  class="product-detail" action="/cart/add" method="post" id="AddToCartForm--{{ section.id }}"> 
+    <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+    <input type="submit" value="Add to Cart" class="btn" />
+          </form> 
 </div>
+  </div>

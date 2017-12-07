@@ -1,5 +1,9 @@
 # mimshop
 Theme development for MIM Shop
+
+Keeping track of changes made to Brooklyn theme
+First Shopify Project
+
 Creating a new look for the website based on the Brooklyn theme
 Main changes -
 1. Add Cart to inside main nav and center
@@ -9,3 +13,4 @@ Main changes -
 5. Add "More Info" and "Add to Cart" options from Collections pages
 6. Add Collection Menu with active link highlight on Collection pages
 7. Design changes to Shop and Contact Us pages
+

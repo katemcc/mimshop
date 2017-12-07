@@ -21,30 +21,18 @@
   }
 </style>
 
-{% if hero_full_height %}
-  {% comment %}
-    Set home page header text color (store name, menu links)
-    to be the same as the slideshow text color (only if there
-    is a slideshow, otherwise it's the global heading text color)
-  {% endcomment %}
-  <style>
-    {% if section.blocks.size > 0 %}
-      .site-nav__link, .site-header__logo a, .site-nav__link:hover, .site-header__logo a:hover {
-        color: {{ section.settings.slide_text_color }};
-      }
-      .burger-icon {
-        background: {{ section.settings.slide_text_color }};
-      }
-    {% else %}
-      .site-nav__link, .site-header__logo a, .site-nav__link:hover, .site-header__logo a:hover {
-        color: {{ settings.color_headings }};
-      }
-      .burger-icon {
-        background: {{ settings.color_headings }};
-      }
-    {% endif %}
-  </style>
-{% endif %}
+{% comment %}
+  Change home page transparent header text color (store name, menu links)
+  to be the same as the slideshow text color
+{% endcomment %}
+<style>
+  .site-nav__link, .site-header__logo a {
+    color: {{ section.settings.slide_text_color }};
+  }
+  .site-nav__link:hover, .site-header__logo a:hover {
+    color: {{ section.settings.slide_text_color }};
+  }
+</style>
 
 {% comment %}
   If hero is first section on homepage, add class that sets
@@ -123,11 +111,38 @@
                       {{ block.settings.slide_subheading | escape }}
                     </p>
                   {% endunless %}
-                  {% unless block.settings.slide_heading == blank %}
-                    <h2 class="h1 hero__title">
+                    
+                <div class="slideshow__logo" itemscope itemtype="http://schema.org/Organization">
+              {% if block.settings.logo_max_width != blank %}
+                  {% capture image_size %}{{ block.settings.logo_max_width | escape }}x{% endcapture %}
+                {% else %}
+                  {% assign image_size = "300x" %}
+                {% endif %}
+
+                {% if section.settings.logo-inverted %}
+                  <a href="/" itemprop="url" class="slideshow__logo-link">
+                    <img src="{{ block.settings.logo-inverted | img_url: image_size }}"
+                    srcset="{{ block.settings.logo-inverted | img_url: image_size }} 1x, {{ section.settings.logo-inverted | img_url: image_size, scale: 1 }} 1x"
+                    alt="{{ block.settings.logo-inverted.alt | default: shop.name }}"
+                    itemprop="logo">
+                  </a>
+                {% elsif block.settings.logo %}
+                  <a href="/" itemprop="url" class="slideshow__logo-link">
+                     <img src="{{ block.settings.logo | img_url: image_size }}"
+                     srcset="{{ block.settings.logo | img_url: image_size }} 1x, {{ block.settings.logo | img_url: image_size, scale: 1 }} 1x"
+                     alt="{{ block.settings.logo.alt | default: shop.name }}"
+                     itemprop="logo">
+                  </a>
+                {% else %}
+               <h2 class="h1 hero__title">
                       {{ block.settings.slide_heading | escape }}
                     </h2>
-                  {% endunless %}
+                {% endif %}
+                    </div>
+                    
+                   
+                  
+                
                   {% unless block.settings.slide_cta == blank %}
                     <a href="{{ block.settings.slide_link }}" style="color: {{ section.settings.slide_button_label_color }}; background-color: {{ section.settings.slide_button_background_color }}" class="btn hero__cta">
                       {{ block.settings.slide_cta | escape }} <span class="icon icon-arrow-right" aria-hidden="true"></span>
@@ -209,7 +224,7 @@
           {
             "type": "color",
             "id": "color_image_overlay",
-            "label": "Overlay",
+            "label": "Background",
             "default": "#3d4246"
           },
           {
@@ -226,6 +241,23 @@
             "type": "header",
             "content": "Text"
           },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo-inverted",
+        "label": "Home page logo",
+        "info": "Shown on slideshow"
+      },
+      {
+        "type": "text",
+        "id": "logo_max_width",
+        "label": "Custom logo width (in pixels)",
+        "default": "300"
+      },
           {
             "type": "text",
             "id": "slide_subheading",

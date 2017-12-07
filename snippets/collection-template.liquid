@@ -5,9 +5,8 @@
 {% paginate collection.products by 12 %}
 
 <header class="section-header text-center">
-  <h1>{{ collection.title }}</h1>
-  <hr class="hr--small">
-  {% if collection.description != blank %}
+  <h1 class="visually-hidden">{{ collection.title }}</h1>
+   {% if collection.description != blank %}
     <div class="grid">
       <div class="grid__item">
         <div class="rte">
@@ -16,7 +15,11 @@
       </div>
     </div>
   {% endif %}
-
+<ul id="collection-menu">
+{% for link in linklists.collections-menu.links %}
+   <li class="collection-menu-link">{{ link.title | link_to: link.url }}</li>
+{% endfor %}
+</ul>
     <div class="grid--full collection-sorting{% if section.settings.collection_sort_enable %} collection-sorting--enabled{% endif %}">
       {% if section.settings.collection_sort_enable %}
         {% include 'collection-sorting' %}

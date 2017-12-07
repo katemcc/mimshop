@@ -31,8 +31,10 @@ assets/respond-proxy.html:
   development: 2017-11-07T05:07:26-05:00   75002d74a330bff6bf069284da503b4c
 assets/respond.min.js:
   development: 2017-11-07T05:07:26-05:00   a2684e9b8fa50d6d11c56a9ada068528
+assets/theme.css.liquid:
+  development: 2017-11-13T05:10:47-05:00   ac894d1f08d5661e8af1ca9bb9141688
 assets/theme.js.liquid:
-  development: 2017-11-07T05:07:26-05:00   99d72191ecf444663188df137f84d4b1
+  development: 2017-11-10T04:44:33-05:00   cf9e618dfc554d6b639a60d6919ec60a
 assets/theme.scss.liquid:
   development: 2017-11-07T05:07:26-05:00   41817b9a6828448f56cccc440a37bb21
 assets/timber.scss.liquid:
@@ -40,11 +42,11 @@ assets/timber.scss.liquid:
 config/settings_data.json:
   development: 2017-11-07T05:07:24-05:00   c3c30e1ca83f135c280b13310574be50
 config/settings_schema.json:
-  development: 2017-11-07T05:07:27-05:00   4d07c12ff4a774fc37014b74d21c8e1f
+  development: 2017-11-10T11:38:00-05:00   e616889032b333c55e730ff4a3f0b434
 layout/password.liquid:
   development: 2017-11-07T05:07:26-05:00   e3df81a186a3aaf1710cfc32ef51a558
 layout/theme.liquid:
-  development: 2017-11-07T05:07:26-05:00   9672a8d779273c6e0926d4141d9ccd5b
+  development: 2017-11-10T11:32:10-05:00   79c07212cb285efabb5cf34b7f7b7147
 locales/de.json:
   development: 2017-11-07T05:07:26-05:00   09cf9a7ff0052d8691dfff54ced866c5
 locales/en.default.json:
@@ -68,7 +70,7 @@ sections/article-template.liquid:
 sections/collection-image-template.liquid:
   development: 2017-11-07T05:07:23-05:00   b91a956f52837a6e689a5b5743a52133
 sections/collection-template.liquid:
-  development: 2017-11-07T05:07:23-05:00   b0d1db6335a23864102b30fe0dbe05d2
+  development: 2017-11-07T17:09:32-05:00   4e9b7cb16e430f0c10d40f93d5a9d7ba
 sections/drawer-menu.liquid:
   development: 2017-11-07T05:07:23-05:00   c459b2923149ea9d6f3248a47addbe37
 sections/featured-blog.liquid:
@@ -77,18 +79,20 @@ sections/featured-collections.liquid:
   development: 2017-11-07T05:07:23-05:00   a9522b514680ee104f88c85901f047a7
 sections/featured-content.liquid:
   development: 2017-11-07T05:07:24-05:00   4c26b9b1add93a244b464eb062764c68
+sections/featured-logos.liquid:
+  development: 2017-11-09T12:27:50-05:00   f2e57e9179c6db99be22d8f19670e515
 sections/featured-product.liquid:
   development: 2017-11-07T05:07:24-05:00   90a8144ef37023a7f7e61740c6311af1
 sections/featured-products.liquid:
   development: 2017-11-07T05:07:24-05:00   9fec56b1671133e9f6a01dec0b062ede
 sections/featured-row.liquid:
-  development: 2017-11-07T05:07:24-05:00   fb9a3596588cd8472aeb370d2ecef85f
+  development: 2017-11-12T17:22:51-05:00   0219cf63f42fa617be790521c8c75afc
 sections/featured-video.liquid:
   development: 2017-11-07T05:07:24-05:00   27c4bd55d80c6e12b2608e5c42d59bd0
 sections/footer.liquid:
   development: 2017-11-07T05:07:24-05:00   09c4cbb15a45a2bb33e70183149c4b60
 sections/header.liquid:
-  development: 2017-11-07T05:07:24-05:00   aec0dc624633a53553821c41e6079033
+  development: 2017-11-09T09:03:35-05:00   c8bda21ba59e605c112406d65a44650c
 sections/list-collections-template.liquid:
   development: 2017-11-07T05:07:24-05:00   cc519f30f6bced273d6c82201bb79c40
 sections/map.liquid:
@@ -102,7 +106,7 @@ sections/password-header.liquid:
 sections/product-template.liquid:
   development: 2017-11-07T05:07:24-05:00   95c4d19d728640510133400f8d92ae87
 sections/slideshow.liquid:
-  development: 2017-11-07T05:07:24-05:00   50b90292c9d7974a75e71d53d2151adf
+  development: 2017-11-07T16:11:51-05:00   3468e1c50622e411663c891547dfe25d
 snippets/ajax-cart-template.liquid:
   development: 2017-11-07T05:07:26-05:00   a12ad20ccc9ef7b2516fe7941c51dba8
 snippets/bgset.liquid:
@@ -110,11 +114,11 @@ snippets/bgset.liquid:
 snippets/collection-grid-collage.liquid:
   development: 2017-11-07T05:07:26-05:00   bba8796945ca96e0d0518d046f15d4ce
 snippets/collection-grid-item.liquid:
-  development: 2017-11-07T05:07:26-05:00   ee5beb448997d2a0c6aea228afd4ca9e
+  development: 2017-11-10T04:29:23-05:00   f45ba5c3d3f6e8b1f8f0c1eb7967cadc
 snippets/collection-sorting.liquid:
   development: 2017-11-07T05:07:26-05:00   b97c850ae616c798f7fcf832a0117681
 snippets/collection-template.liquid:
-  development: 2017-11-07T05:07:26-05:00   02cacd5add9a70b3cb13576f8b485732
+  development: 2017-11-08T07:05:31-05:00   1c7065256c0442939fceb7a3bbb3eb47
 snippets/comment.liquid:
   development: 2017-11-07T05:07:27-05:00   490bf7370ece4d0217f9c229aefd5880
 snippets/featured-blog.liquid:
@@ -136,7 +140,7 @@ snippets/pagination.liquid:
 snippets/product-grid-collage.liquid:
   development: 2017-11-07T05:07:27-05:00   4abdc9f608a23b5c0ab9d2581e08a060
 snippets/product-grid-item.liquid:
-  development: 2017-11-07T05:07:27-05:00   967ef748cf9d1dc180bca9987fa017cb
+  development: 2017-11-10T04:42:13-05:00   6f1ac4ccbb7f7d986733495680079c7b
 snippets/respond.liquid:
   development: 2017-11-07T05:07:27-05:00   ca6abf0635dc2ad8c6bd377f83c79f6b
 snippets/search-bar.liquid:
@@ -154,9 +158,9 @@ templates/404.liquid:
 templates/article.liquid:
   development: 2017-11-07T05:07:27-05:00   9763e9f309642903282720d29b422aaf
 templates/blog.liquid:
-  development: 2017-11-07T05:07:27-05:00   61610ee5c1452e884bc13688553d2a32
+  development: 2017-11-10T13:15:58-05:00   cd2551d63cf012bc47755fc633eb4459
 templates/cart.liquid:
-  development: 2017-11-07T05:07:27-05:00   efcf7593a46e6f95cc2ccf55356e5784
+  development: 2017-11-10T11:57:00-05:00   f499922c3a0b7b7c55b3a263919bdd3d
 templates/collection.image.liquid:
   development: 2017-11-07T05:07:27-05:00   cd9a9b1849d65ca4311d6f793008812f
 templates/collection.liquid:
@@ -182,7 +186,7 @@ templates/index.liquid:
 templates/list-collections.liquid:
   development: 2017-11-07T05:07:27-05:00   eabed71f62563b929b8da83a4aeacbfb
 templates/page.contact.liquid:
-  development: 2017-11-07T05:07:27-05:00   b31a760236911163d10b4a663a76c59d
+  development: 2017-11-10T06:04:08-05:00   fde9e3c129ad677e4b1b71beafa1e201
 templates/page.full-width.liquid:
   development: 2017-11-07T05:07:27-05:00   f21db2cc6691ac1165c7a07ff8bc11cb
 templates/page.liquid:
